@@ -12,18 +12,18 @@ class CartPoleA2CProblem(A2CProblem):
     return gym.make('CartPole-v0')
 
   def init_agent(self):
-    params = self.params
+    hparams = self.hparams
 
     observation_space, action_space = self.get_gym_spaces()
 
     agent = BaseA2CLearner(
         observation_space,
         action_space,
-        lr=params.actor_lr,
-        gamma=params.gamma,
-        lmbda=params.lmbda,
-        alpha=params.alpha,
-        beta=params.beta)
+        lr=hparams.actor_lr,
+        gamma=hparams.gamma,
+        lmbda=hparams.lmbda,
+        alpha=hparams.alpha,
+        beta=hparams.beta)
 
     return agent
 

@@ -22,16 +22,16 @@ class CartPoleDQNProblem(DQNProblem):
     return gym.make('CartPole-v1')
 
   def init_agent(self):
-    params = self.params
+    hparams = self.hparams
 
     observation_space, action_space = self.get_gym_spaces()
 
     agent = CartPoleDQNLearner(
         observation_space,
         action_space,
-        lr=params.actor_lr,
-        gamma=params.gamma,
-        target_update_interval=params.target_update_interval)
+        lr=hparams.actor_lr,
+        gamma=hparams.gamma,
+        target_update_interval=hparams.target_update_interval)
 
     return agent
 
