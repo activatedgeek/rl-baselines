@@ -25,6 +25,12 @@ jobs:
         - pip install -U .
         - echo "TODO!"
 
+    - stage: docs
+      if: (tag IS present) OR (branch = master)
+      script:
+        - pip install -U -r requirements_dev.txt
+        - pushd docs && make html && popd
+
     - stage: deploy
       if: tag IS present
       deploy:
