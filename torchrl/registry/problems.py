@@ -6,7 +6,7 @@ import gym
 import os
 import torch
 import glob
-import yaml
+import ruamel.yaml as yaml
 import cloudpickle
 from tqdm import tqdm
 from tensorboardX import SummaryWriter
