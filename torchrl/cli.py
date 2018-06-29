@@ -6,6 +6,7 @@ import torch
 import importlib
 
 import torchrl.registry as registry
+from torchrl.registry.problems import Problem
 
 
 def import_usr_dir(usr_dir):
@@ -116,7 +117,7 @@ def main():
 
   # Load parameters and arguments
   if args.load_dir:
-    hparams, loaded_args = registry.problems.Problem.load_from_dir(args.load_dir)
+    hparams, loaded_args = Problem.load_from_dir(args.load_dir)
     problem_args.__dict__.update(loaded_args.__dict__)
     args.log_dir = args.load_dir
   else:

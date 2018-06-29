@@ -12,17 +12,15 @@ class PendulumDDPGProblem(DDPGProblem):
     return gym.make('Pendulum-v0')
 
   def init_agent(self):
-    hparams = self.hparams
-
     observation_space, action_space = self.get_gym_spaces()
 
     agent = BaseDDPGLearner(
         observation_space,
         action_space,
-        actor_lr=hparams.actor_lr,
-        critic_lr=hparams.critic_lr,
-        gamma=hparams.gamma,
-        tau=hparams.tau)
+        actor_lr=self.hparams.actor_lr,
+        critic_lr=self.hparams.critic_lr,
+        gamma=self.hparams.gamma,
+        tau=self.hparams.tau)
 
     return agent
 
