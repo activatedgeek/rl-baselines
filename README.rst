@@ -1,11 +1,12 @@
-# TorchRL
-
+TorchRL
+========
 [![Build Status](https://travis-ci.org/activatedgeek/torchrl.svg?branch=master)](https://travis-ci.org/activatedgeek/torchrl)
 [![PyPI version](https://badge.fury.io/py/torchrl.svg)](https://pypi.org/project/torchrl/)
 ![Project Status](https://img.shields.io/badge/status-beta-green.svg)
 
 
-## Objectives
+Objectives
+-----------
 
 * Modularity in the RL pipeline
 
@@ -13,43 +14,20 @@
 
 * Scalability
 
-# Install
+Install
+--------
 
 ```
 $ pip install torchrl
 ```
 
-# Usage
+Usage
+------
 
-```
-$ torchrl -h
-usage: RL Experiment Runner [-h] [--problem] [--hparam-set] [--extra-hparams]
-                            [--seed] [--show-progress] [--no-cuda] [--device]
-                            [--usr-dirs] [--log-dir] [--load-dir]
-                            [--start-epoch] [--log-interval] [--eval-interval]
-                            [--num-eval]
+.. program-output:: torchrl -h
 
-optional arguments:
-  -h, --help        show this help message and exit
-  --problem         Problem name (default: )
-  --hparam-set      Hyperparameter set name (default: )
-  --extra-hparams   Comma-separated list of extra key-value pairs,
-                    automatically handles types int/float/str (default: )
-  --seed            Random seed (default: None)
-  --show-progress   Show epoch progress (default: False)
-  --no-cuda         Disable CUDA (default: False)
-  --device          Device selection for GPU (default: cuda)
-  --usr-dirs        Comma-separated list of user module directories (default:
-                    )
-  --log-dir         Directory to store logs (default: log)
-  --load-dir        Directory to load agent and resume from (default: None)
-  --start-epoch     Epoch to start with after a load (default: None)
-  --log-interval    Log interval w.r.t epochs (default: 100)
-  --eval-interval   Eval interval w.r.t epochs (default: 1000)
-  --num-eval        Number of evaluations (default: 10)
-```
-
-# Experiments
+Experiments
+------------
 
 ## DQN on CartPole-v1
 
