@@ -47,6 +47,7 @@ extensions = [
     'sphinx.ext.napoleon',
     'm2r',
     'sphinxcontrib.programoutput',
+    'sphinx-prompt',
     # TODO: 'sphinx_gallery.gen_gallery',
 ]
 

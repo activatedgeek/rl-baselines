@@ -4,14 +4,17 @@ TorchRL
 [![PyPI version](https://badge.fury.io/py/torchrl.svg)](https://pypi.org/project/torchrl/)
 ![Project Status](https://img.shields.io/badge/status-beta-green.svg)
 
+TorchRL provides highly modular and extensible approach to experimenting with
+Reinforcement Learning. It allows for a registry based approach to running
+experiments, allows easy checkpointing, and updating hyper parameter sets.
+All this is accessible via a programmatic interface as well as a friendly CLI.
 
 Objectives
 -----------
 
 * Modularity in the RL pipeline
-
-* Clean implementations of basic ideas
-
+* Clean implementations of fundamental ideas
+* Fast Experimentation
 * Scalability
 
 Install
@@ -21,54 +24,9 @@ Install
 $ pip install torchrl
 ```
 
-Usage
-------
+This installs the `torchrl` package as well as a `torchrl` CLI.
 
-.. program-output:: torchrl -h
+What's next?
+----------------
 
-Experiments
-------------
-
-## DQN on CartPole-v1
-
-```
-$ torchrl --problem=dqn-cartpole-v1 --hparam-set=dqn-cartpole --seed=1 \
-    --usr-dirs=experiments --log-dir=log/dqn --show-progress
-```
-
-
-## A2C on CartPole-v0
-
-```
-$ torchrl --problem=a2c-cartpole-v0 --hparam-set=a2c-cartpole --seed=1 \
-    --usr-dirs=experiments --log-dir=log/a2c --show-progress
-```
-
-## DDPG on Pendulum-v0
-
-
-```
-$ torchrl --problem=ddpg-pendulum-v0 --hparam-set=ddpg-pendulum --seed=1 \
-    --usr-dirs=experiments --log-dir=log/ddpg --show-progress
-```
-
-## PPO on Pendulum-v0
-
-```
-$ torchrl --problem=ppo-pendulum-v0 --hparam-set=ppo-pendulum --seed=1 \
-    --usr-dirs=experiments --log-dir=log/ppo --show-progress
-```
-
-# Resume Experiments
-
-To reload an experiment from previous run, say for instance the DQN run
-above for `3000` more steps (optional argumen),
-
-```
-$ torchrl --usr-dirs=experiments --load-dir=log/dqn \
-    --extra-hparams=num_total_steps=3000 \
-    --show-progress
-```
-
-This will read all the other parameters from the directory and load the latest
-checkpoint.
+Read the :doc:`getting_started` or see some ready-to-run :doc:`experiments`.
