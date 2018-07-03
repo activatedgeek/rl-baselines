@@ -1,3 +1,3 @@
 .. toctree::
 
-.. mdinclude:: ../../README.rst
+.. mdinclude:: ../../README.md
