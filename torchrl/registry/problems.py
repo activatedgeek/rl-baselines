@@ -12,8 +12,9 @@ from tqdm import tqdm
 from tensorboardX import SummaryWriter
 
 from .hparams import HParams
-from .. import MultiEpisodeRunner, CPUReplayBuffer
+from .. import MultiEpisodeRunner
 from ..learners import BaseLearner
+from ..storage import ReplayBuffer
 from ..utils import set_seeds, minibatch_generator
 
 
@@ -294,7 +295,7 @@ class DQNProblem(Problem):
   def __init__(self, hparams, problem_args, *args, **kwargs):
     super(DQNProblem, self).__init__(hparams, problem_args, *args, **kwargs)
 
-    self.buffer = CPUReplayBuffer(self.hparams.buffer_size)
+    self.buffer = ReplayBuffer(self.hparams.buffer_size)
 
   def train(self, history_list: list):
     # Populate the buffer
