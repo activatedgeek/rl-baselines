@@ -5,7 +5,7 @@
 Getting Started
 ================
 
-.. hint::
+.. seealso::
 
     It might be helpful to take a look at :doc:`concepts`.
 

@@ -30,7 +30,7 @@ Double DQN on CartPole-v1
             --show-progress
 
 Prioritized DQN on CartPole-v1
--------------------
+-------------------------------
 
 .. code-block:: bash
 
@@ -42,7 +42,7 @@ Prioritized DQN on CartPole-v1
             --show-progress
 
 Prioritized Double DQN on CartPole-v1
--------------------
+--------------------------------------
 
 .. code-block:: bash
 
