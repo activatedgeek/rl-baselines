@@ -24,6 +24,7 @@ Objectives
 * Clean implementations of fundamental ideas
 * Fast Experimentation
 * Scalability
+* Low bar and High ceiling
 
 Install
 --------
