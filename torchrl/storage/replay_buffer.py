@@ -33,12 +33,13 @@ class ReplayBuffer:
 
 class PrioritizedReplayBuffer(ReplayBuffer):
   def __init__(self, size=DEFAULT_BUFFER_SIZE,
-               epsilon=0.01, alpha=1.0):
+               epsilon=0.01, alpha=1.0, beta=1.0):
     super(PrioritizedReplayBuffer, self).__init__(size=size)
 
     self.size = size
     self.epsilon = epsilon
     self.alpha = alpha
+    self.beta = beta
     self.probs = deque(maxlen=size)
 
   def push(self, item):
@@ -58,10 +59,11 @@ class PrioritizedReplayBuffer(ReplayBuffer):
 
     probs = np.array(self.probs)
     probs /= np.sum(probs)
+    # weights = np.power(self.__len__() * probs, -self.beta)
 
     indices = np.random.choice(range(self.__len__()), size=batch_size,
                                replace=False, p=probs)
-    batch = list(map(lambda i: self.buffer[i], indices))
+    batch = [self.buffer[i] for i in indices]
     return indices, batch
 
   def update_probs(self, indices: np.array, td_error: np.array):
