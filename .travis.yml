@@ -18,7 +18,7 @@ jobs:
       before_script:
         - pip install .[dev]
       script:
-        - pylint torchrl experiments
+        - pylint tests torchrl experiments
         - pytest
 
     - stage: deploy

@@ -1,3 +1,5 @@
+# pylint: disable=redefined-outer-name
+
 import pytest
 import random
 from torchrl.utils import SumTree
@@ -19,13 +21,13 @@ def test_clear(tree: SumTree):
   assert tree.sum_value == 0.0
 
 def test_sum(tree: SumTree):
-  sum = 0.0
+  sum_value = 0.0
   for _ in range(tree.capacity):
     value = random.random()
     tree.add(value)
 
-    sum += value
-    assert tree.sum_value == sum
+    sum_value += value
+    assert tree.sum_value == sum_value
 
 def test_max(tree: SumTree):
   max_value = 0.0

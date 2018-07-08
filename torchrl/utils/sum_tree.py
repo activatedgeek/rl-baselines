@@ -45,20 +45,3 @@ class SumTree:
   @property
   def sum_value(self):
     return self.tree[0]
-
-
-if __name__ == '__main__':
-  import random
-
-  t = SumTree(capacity=8)
-
-  sum = 0.0
-  max_val = 0.0
-  for _ in range(8):
-    v = random.random()
-    t.add(v)
-    sum += v
-    max_val = max(max_val, v)
-    assert sum == t.sum_value
-    assert max_val == t.max_value
-    print(t)
