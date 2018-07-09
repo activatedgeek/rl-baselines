@@ -21,7 +21,8 @@ with open('requirements.txt', 'r') as f:
 with open('requirements_dev.txt', 'r') as f:
   dev_install_requires = f.readlines()
 
-VERSION = os.environ.get('TRAVIS_PULL_REQUEST_BRANCH') or os.environ.get('TRAVIS_BRANCH') or 'dev'
+with open('VERSION') as f:
+  VERSION = f.read()
 
 with open('README.rst') as f:
     README = f.read()
@@ -31,7 +32,7 @@ setup(name='torchrl',
       long_description=README,
       long_description_content_type='text/x-rst',
       version=VERSION,
-      url='https://www.github.com/activatedgeek/torchrl',
+      url='https://torchrl.sanyamkapoor.com',
       author='Sanyam Kapoor',
       license='Apache License 2.0',
       classifiers=[
