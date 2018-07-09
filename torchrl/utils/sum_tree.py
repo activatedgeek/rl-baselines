@@ -7,7 +7,10 @@ class SumTree:
   that node. The binary tree here is represented
   by an array.
   """
-  def __init__(self, capacity: int = 8):
+  def __init__(self, capacity: int = 16):
+    assert not (capacity & (capacity - 1)), \
+      "Capacity should be a power of two, found {}".format(capacity)
+
     self.capacity = capacity
     self.tree = None
     self._next_target_index = 0
@@ -18,7 +21,7 @@ class SumTree:
     self.update(self._next_target_index, value)
     self._next_target_index = (self._next_target_index + 1) % self.capacity
 
-  def update(self, index, value):
+  def update(self, index: int, value):
     tree_index = self.capacity - 1 + index
     delta = value - self.tree[tree_index]
 
@@ -29,14 +32,35 @@ class SumTree:
 
         iter_index = (iter_index - 1) // 2
 
+  def get(self, value):
+    search_value = value
+    tree_index = 0
+
+    while True:
+      left_child = 2 * tree_index + 1
+      right_child = 2 * tree_index + 2
+
+      if left_child >= len(self):
+        break
+
+      if search_value <= self.tree[left_child]:
+        tree_index = left_child
+      else:
+        search_value -= self.tree[left_child]
+        tree_index = right_child
+
+    return tree_index - (self.capacity - 1)
+
   def clear(self):
     self.tree = [0.0] * (2 * self.capacity - 1)
+    self._next_target_index = 0
 
   def __len__(self):
-    return self.capacity
+    return len(self.tree)
 
-  def __repr__(self):
-    return ' '.join([str(t) for t in self.tree])
+  @property
+  def next_free_index(self):
+    return self._next_target_index
 
   @property
   def max_value(self):
