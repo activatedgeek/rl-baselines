@@ -1,10 +1,12 @@
 from .base_agent import BaseAgent
 
 
-class RandomGymAgent(BaseAgent):
+class RandomGymClassicControlAgent(BaseAgent):
   """Take random actions on a Gym environment.
 
-  @NOTE: Work in Progress. Not supported yet.
+  This is only tested on Classic Control
+  environments from OpenAI Gym. It is only
+  meant to get started working with new environments.
   """
   @property
   def models(self) -> list:

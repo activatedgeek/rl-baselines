@@ -6,7 +6,7 @@ import pytest
 import torchrl.registry as registry
 import torchrl.utils as utils
 import torchrl.problems.base_hparams as base_hparams
-from torchrl.agents.random_gym_agent import RandomGymAgent
+from torchrl.agents.random_gym_agent import RandomGymClassicControlAgent
 
 
 @pytest.mark.parametrize('env_id', [
@@ -24,7 +24,7 @@ def test_classic_control_problem(env_id):
     def init_agent(self):
       observation_space, action_space = utils.get_gym_spaces(self.make_env)
 
-      return RandomGymAgent(observation_space, action_space)
+      return RandomGymClassicControlAgent(observation_space, action_space)
 
     def train(self, history_list: list) -> dict:
       return {}
