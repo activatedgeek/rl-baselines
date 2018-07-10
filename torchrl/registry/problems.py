@@ -12,7 +12,7 @@ from tqdm import tqdm
 from tensorboardX import SummaryWriter
 
 from .. import MultiEpisodeRunner
-from ..learners import BaseLearner
+from ..agents import BaseAgent
 from ..utils import set_seeds
 
 
@@ -131,7 +131,7 @@ class Problem(metaclass=abc.ABCMeta):
       cloudpickle.dump(self.agent.state, checkpoint_file)
 
   @abc.abstractmethod
-  def init_agent(self) -> BaseLearner:
+  def init_agent(self) -> BaseAgent:
     """
     Use this method to initialize the learner using `self.args`
     object
