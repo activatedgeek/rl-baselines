@@ -1,5 +1,5 @@
 import abc
-import logging
+import warnings
 import argparse
 import numpy as np
 import gym
@@ -70,7 +70,7 @@ class Problem(metaclass=abc.ABCMeta):
   def init(self):
     # Initialize logging directory
     if os.path.isdir(self.log_dir) and os.listdir(self.log_dir):
-      logging.warning('Directory "%s" not empty!', self.log_dir)
+      warnings.warn('Directory "{}" not empty!'.format(self.log_dir))
     os.makedirs(self.log_dir, exist_ok=True)
 
     hparams_file_path = os.path.join(self.log_dir,
