@@ -68,6 +68,16 @@ class MultiEpisodeRunner:
     self._obs = [None] * n_runners
     self._rollout_duration = 0.0
 
+  # TODO(sanyam): device argument should not be here!
+  def get_action_list(self, learner, obs_list, device):
+    with torch.no_grad():
+      batch_obs_tensor = torch.from_numpy(
+        np.array(obs_list)
+      ).float().to(device)
+      action_list = learner.act(batch_obs_tensor)
+
+    return action_list
+
   def collect(self, learner: BaseAgent, device: torch.device,
               steps: int = None):
     """This routine collects trajectories from each environment
@@ -98,12 +108,7 @@ class MultiEpisodeRunner:
         break
 
       obs_list = self.get_obs_list()
-
-      with torch.no_grad():
-        batch_obs_tensor = torch.from_numpy(
-            np.array(obs_list)
-        ).float().to(device)
-        action_list = learner.act(batch_obs_tensor)
+      action_list = self.get_action_list(learner, obs_list, device)
 
       step_list = self.multi_envs.step(batch_act_ids, action_list)
 
@@ -159,6 +164,8 @@ class MultiEpisodeRunner:
     """Get a numpy array of all active observations"""
     return list(filter(lambda obs: obs is not None, self._obs))
 
+  # TODO(sanyam): numpy assumption is wrong. abstract out to
+  # utils
   @staticmethod
   def init_run_history(observation_space: gym.Space,
                        action_space: gym.Space) -> list:

@@ -1,8 +1,8 @@
 from .base_agent import BaseAgent
 
 
-class RandomAgent(BaseAgent):
-  """Take random actions on any environment.
+class RandomGymAgent(BaseAgent):
+  """Take random actions on a Gym environment.
 
   @NOTE: Work in Progress. Not supported yet.
   """
@@ -14,8 +14,8 @@ class RandomAgent(BaseAgent):
   def checkpoint(self) -> object:
     return None
 
-  def act(self, *args, **kwargs):
-    return self.action_space.sample()
+  def act(self, obs):
+    return [[self.action_space.sample()] for _ in range(len(obs))]
 
   def learn(self, *args, **kwargs):
     return {}
