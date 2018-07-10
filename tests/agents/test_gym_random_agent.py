@@ -10,11 +10,11 @@ from torchrl.agents.random_gym_agent import RandomGymClassicControlAgent
 
 
 @pytest.mark.parametrize('env_id', [
-  'Acrobot-v1',
-  'CartPole-v1',
-  'MountainCar-v0',
-  'MountainCarContinuous-v0',
-  'Pendulum-v0',
+    'Acrobot-v1',
+    'CartPole-v1',
+    'MountainCar-v0',
+    'MountainCarContinuous-v0',
+    'Pendulum-v0',
 ])
 def test_classic_control_problem(env_id):
   class RandomGymProblem(registry.Problem):
@@ -35,5 +35,5 @@ def test_classic_control_problem(env_id):
   hparams = base_hparams.base()
 
   problem = RandomGymProblem(hparams, args, None,
-                          device='cpu', show_progress=False)
+                             device='cpu', show_progress=False)
   problem.run()

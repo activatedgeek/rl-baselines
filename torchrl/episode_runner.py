@@ -72,7 +72,7 @@ class MultiEpisodeRunner:
   def get_action_list(self, learner, obs_list, device):
     with torch.no_grad():
       batch_obs_tensor = torch.from_numpy(
-        np.array(obs_list)
+          np.array(obs_list)
       ).float().to(device)
       action_list = learner.act(batch_obs_tensor)
 

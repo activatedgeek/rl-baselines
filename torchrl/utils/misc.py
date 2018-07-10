@@ -28,7 +28,7 @@ def minibatch_generator(*args, minibatch_size=5):
     minibatch_idx = np.random.choice(total_len, minibatch_size)
 
 
-def get_gym_spaces(make_env_fn: Callable[..., gym.Env]) -> Tuple[gym.Space, gym.Space]:
+def get_gym_spaces(make_env_fn: Callable[..., gym.Env]) -> Tuple[gym.Space, gym.Space]:  # pylint: disable=line-too-long
   """
   A utility function to get observation and actions spaces of a
   Gym environment
