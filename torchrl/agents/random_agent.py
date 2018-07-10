@@ -11,12 +11,11 @@ class RandomAgent(BaseAgent):
     return []
 
   @property
-  def state(self) -> object:
+  def checkpoint(self) -> object:
     return None
 
   def act(self, *args, **kwargs):
     return self.action_space.sample()
 
   def learn(self, *args, **kwargs):
-    pass
-
+    return {}

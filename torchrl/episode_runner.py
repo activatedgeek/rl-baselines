@@ -5,6 +5,7 @@ import torch
 import functools
 
 from .agents import BaseAgent
+from .utils import get_gym_spaces
 from torchrl.multi_proc_wrapper import MultiProcWrapper
 
 
@@ -55,7 +56,9 @@ class MultiEpisodeRunner:
     self.max_steps = max_steps
     self.make_env_fn = make_env_fn
 
-    self.observation_space, self.action_space = self.get_gym_spaces()
+    # TODO(sanyam): Assumption of Gym environments
+    self.observation_space, self.action_space = get_gym_spaces(make_env_fn)
+
     self.multi_envs = MultiEnvs(make_env_fn, n_envs=n_runners,
                                 base_seed=base_seed,
                                 daemon=daemon, autostart=autostart)
@@ -119,17 +122,6 @@ class MultiEpisodeRunner:
 
   def close(self):
     self.multi_envs.close()
-
-  def get_gym_spaces(self):
-    """
-    A utility function to get observation and actions spaces of a
-    Gym environment
-    """
-    env = self.make_env_fn()
-    observation_space = env.observation_space
-    action_space = env.action_space
-    env.close()
-    return observation_space, action_space
 
   def append_history(self, obs, action, next_obs, reward, done, target_history):
     target_history[0] = np.append(target_history[0],
