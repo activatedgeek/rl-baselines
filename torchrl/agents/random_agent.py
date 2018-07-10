@@ -2,7 +2,10 @@ from .base_agent import BaseAgent
 
 
 class RandomAgent(BaseAgent):
-  """Take random actions on any environment."""
+  """Take random actions on any environment.
+
+  @NOTE: Work in Progress. Not supported yet.
+  """
   @property
   def models(self) -> list:
     return []
