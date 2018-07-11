@@ -32,7 +32,7 @@ def hparam_dqn_cartpole():
   params.num_processes = 1
   params.actor_lr = 1e-3
   params.gamma = 0.99
-  params.target_update_interval = 100
+  params.target_update_interval = 10
   params.eps_min = 1e-2
   params.buffer_size = 1000
   params.batch_size = 32
@@ -46,5 +46,6 @@ def hparam_double_dqn_cartpole():
   params = hparam_dqn_cartpole()
 
   params.double_dqn = True
+  params.target_update_interval = 5
 
   return params

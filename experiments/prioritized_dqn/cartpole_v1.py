@@ -36,11 +36,3 @@ def hparam_per_dqn_cartpole():
   params.beta_anneal_steps = 1000
 
   return params
-
-@registry.register_hparam('per-double-dqn-cartpole')
-def hparam_per_double_dqn_cartpole():
-  params = hparam_per_dqn_cartpole()
-
-  params.double_dqn = True
-
-  return params
