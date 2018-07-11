@@ -45,7 +45,8 @@ setup(name='torchrl',
         'License :: OSI Approved :: Apache Software License',
         'Topic :: Scientific/Engineering :: Artificial Intelligence',
       ],
-      packages=find_packages(exclude=['tests.*', 'tests', 'experiments']),
+      packages=find_packages(exclude=[
+        'tests', 'tests.*', 'experiments', 'experiments.*']),
       install_requires=install_requires,
       extras_require={
         'dev': dev_install_requires,
