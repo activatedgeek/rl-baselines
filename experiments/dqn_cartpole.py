@@ -4,17 +4,6 @@ import torchrl.utils as utils
 from torchrl.problems import base_hparams, DQNProblem, PrioritizedDQNProblem
 from torchrl.agents import BaseDQNAgent
 
-
-class CartPoleDQNAgent(BaseDQNAgent):
-  def compute_q_values(self, obs, action, reward, next_obs, done):
-    for i, _ in enumerate(reward):
-      if done[i] == 1:
-        reward[i] = -1.0
-
-    return super(CartPoleDQNAgent, self).compute_q_values(
-        obs, action, reward, next_obs, done)
-
-
 @registry.register_problem('dqn-cartpole-v1')
 class CartPoleDQNProblem(DQNProblem):
   def make_env(self):
@@ -23,7 +12,7 @@ class CartPoleDQNProblem(DQNProblem):
   def init_agent(self):
     observation_space, action_space = utils.get_gym_spaces(self.make_env)
 
-    agent = CartPoleDQNAgent(
+    agent = BaseDQNAgent(
         observation_space,
         action_space,
         double_dqn=self.hparams.double_dqn,
@@ -42,12 +31,13 @@ class PrioritizedCartPoleDQNProblem(PrioritizedDQNProblem):
   def init_agent(self):
     observation_space, action_space = utils.get_gym_spaces(self.make_env)
 
-    agent = CartPoleDQNAgent(
+    agent = BaseDQNAgent(
         observation_space,
         action_space,
         double_dqn=self.hparams.double_dqn,
         lr=self.hparams.actor_lr,
         gamma=self.hparams.gamma,
+        num_eps_steps=self.hparams.num_eps_steps,
         target_update_interval=self.hparams.target_update_interval)
 
     return agent
@@ -60,12 +50,13 @@ def hparam_dqn_cartpole():
   params.rollout_steps = 1
   params.num_processes = 1
   params.actor_lr = 1e-3
-  params.gamma = 0.8
+  params.gamma = 0.99
   params.target_update_interval = 5
-  params.eps_min = 0.15
-  params.buffer_size = 5000
-  params.batch_size = 64
+  params.eps_min = 1e-2
+  params.buffer_size = 1000
+  params.batch_size = 32
   params.num_total_steps = 10000
+  params.num_eps_steps = 500
 
   return params
 
