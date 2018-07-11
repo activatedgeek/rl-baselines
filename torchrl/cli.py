@@ -3,18 +3,10 @@ import ast
 import os
 import sys
 import torch
-import importlib
 
 import torchrl.registry as registry
+from torchrl.utils import import_usr_dir
 from torchrl.registry.problems import Problem, HParams
-
-
-def import_usr_dir(usr_dir):
-  dir_path = os.path.abspath(os.path.expanduser(usr_dir).rstrip("/"))
-  containing_dir, module_name = os.path.split(dir_path)
-  sys.path.insert(0, containing_dir)
-  importlib.import_module(module_name)
-  sys.path.pop(0)
 
 
 def parse_args(argv):
