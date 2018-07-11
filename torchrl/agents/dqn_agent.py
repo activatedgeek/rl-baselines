@@ -62,13 +62,13 @@ class BaseDQNAgent(BaseAgent):
     with torch.no_grad():
       if self.double_dqn:
         _, next_actions = self.q_net(next_obs).max(1, keepdim=True)
-        max_next_q_values = self.target_q_net(next_obs).gather(1, next_actions)
+        next_q_values = self.target_q_net(next_obs).gather(1, next_actions)
       else:
-        max_next_q_values = self.target_q_net(next_obs)
-        max_next_q_values = max_next_q_values.max(1)[0].unsqueeze(1)
+        next_q_values = self.target_q_net(next_obs)
+        next_q_values = next_q_values.max(1)[0].unsqueeze(1)
 
       expected_q_values = reward + \
-                          self.gamma * max_next_q_values * (1.0 - done.float())
+                          self.gamma * next_q_values * (1.0 - done.float())
 
     return current_q_values, expected_q_values
 
