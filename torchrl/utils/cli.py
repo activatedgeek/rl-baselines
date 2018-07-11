@@ -1,12 +1,22 @@
+"""Utilities for the CLI
+
+The interface expected at the CLI is pretty much
+what is needed everywhere else. So any usage programatically
+can also simply re-use these routines to prevent any
+disparities in problem usage. Problem class expects
+certain arguments which this file handles cleanly.
+Various processing steps can be later split further
+if needed.
+"""
+
 import argparse
 import ast
 import os
-import sys
 import torch
 
-import torchrl.registry as registry
-from torchrl.utils import import_usr_dir
-from torchrl.registry.problems import Problem, HParams
+from .. import registry
+from .misc import import_usr_dir
+from ..registry.problems import Problem, HParams
 
 
 def parse_args(argv):
@@ -103,8 +113,8 @@ def filter_problem_args(args: argparse.Namespace):
   return argparse.Namespace(**filtered_args)
 
 
-def main():
-  problem_args = parse_args(sys.argv[1:])
+def main(argv: list = None):
+  problem_args = parse_args(argv)
   args = filter_problem_args(problem_args)
 
   # Load parameters and arguments
@@ -126,7 +136,3 @@ def main():
   if args.load_dir:
     problem.load_checkpoint(args.load_dir, args.start_epoch)
   problem.run()
-
-
-if __name__ == '__main__':
-  main()
