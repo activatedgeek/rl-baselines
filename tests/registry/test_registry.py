@@ -1,3 +1,5 @@
+# pylint: disable=redefined-outer-name
+
 import random
 import pytest
 import torchrl.registry.registry as registry
@@ -10,7 +12,7 @@ def hparam_set_fixture():
   random_int = random.randint(1, 100)
 
   @registry.register_hparam(hparam_set_id)
-  def custom_hparams():
+  def custom_hparams():  # pylint: disable=unused-variable
     hparams = HParams()
     hparams.custom_value = random_int
 

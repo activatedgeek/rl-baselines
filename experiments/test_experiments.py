@@ -23,15 +23,16 @@ for problem_id, hparams_list in registry.list_problem_hparams().items():
 def problem_argv(request):
   problem_id, hparam_set_id = request.param
   args_dict = {
-    'problem': problem_id,
-    'hparam-set': hparam_set_id,
-    'extra-hparams': 'num_total_steps=100',
+      'problem': problem_id,
+      'hparam-set': hparam_set_id,
+      'extra-hparams': 'num_total_steps=100',
   }
   argv = ['--{}={}'.format(key, value) for key, value in args_dict.items()]
 
   yield argv
 
 
-@pytest.mark.parametrize('problem_argv', problem_hparams_tuples, indirect=['problem_argv'])
+@pytest.mark.parametrize('problem_argv', problem_hparams_tuples,
+                         indirect=['problem_argv'])
 def test_problem(problem_argv):
   cli.main(problem_argv)
