@@ -1,5 +1,13 @@
 # pylint: disable=redefined-outer-name
 
+"""Test Experiments.
+
+This test runs all problems and hyperparameter
+pairs for 100 time steps. It only guarantees
+correct API compatiblity and not the problem
+performance metrics.
+"""
+
 import pytest
 import torchrl.registry as registry
 import torchrl.utils.cli as cli
