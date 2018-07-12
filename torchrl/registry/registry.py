@@ -2,9 +2,11 @@ __all__ = [
     'register_hparam',
     'list_hparams',
     'get_hparam',
+    'remove_hparam',
     'register_problem',
     'list_problems',
     'get_problem',
+    'remove_problem',
 ]
 
 
@@ -27,6 +29,10 @@ def _common_get(target_dict: dict, key: str):
   return target_dict[key]
 
 
+def _common_remove(target_dict: dict, key: str):
+  target_dict.pop(key)
+
+
 def register_hparam(name=None):
   target_dict = _HPARAMS
 
@@ -44,6 +50,10 @@ def get_hparam(key: str):
   return _common_get(_HPARAMS, key)
 
 
+def remove_hparam(key: str):
+  return _common_remove(_HPARAMS, key)
+
+
 def register_problem(name=None):
   target_dict = _PROBLEMS
 
@@ -59,3 +69,7 @@ def list_problems():
 
 def get_problem(key: str):
   return _common_get(_PROBLEMS, key)
+
+
+def remove_problem(key: str):
+  return _common_remove(_PROBLEMS, key)
