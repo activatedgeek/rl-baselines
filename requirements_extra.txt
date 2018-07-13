@@ -1,0 +1,4 @@
+gym[atari]~=0.10
+gym[box2d]~=0.10
+gym[mujoco]~=0.10
+mujoco-py<1.50.2,>=1.50.1
