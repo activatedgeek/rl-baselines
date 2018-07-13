@@ -6,8 +6,8 @@ from ..registry import Problem
 class A2CProblem(Problem):
   def train(self, history_list: list):
     history_list = [
-      tuple([item.to(self.device) for item in history])
-      for history in history_list
+        tuple([item.to(self.device) for item in history])
+        for history in history_list
     ]
 
     batch_history = self.merge_histories(*history_list)
