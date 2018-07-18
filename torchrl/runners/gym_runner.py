@@ -3,6 +3,8 @@ import gym
 
 from .base_runner import BaseRunner
 from ..agents import BaseAgent
+from ..utils.gym_utils import init_run_history
+from ..utils.gym_utils import append_run_history
 
 
 class GymRunner(BaseRunner):
@@ -19,51 +21,38 @@ class GymRunner(BaseRunner):
     self.env_id = env_id
     self.env = self.make_env(seed)
 
-    self.state = None
+    self.obs = None
 
   def make_env(self, seed: int = None) -> gym.Env:
-    """Create the environment, optionally with seed."""
     env = gym.make(self.env_id)
     env.seed(seed)
     return env
 
   def reset(self):
-    """Reset the environment."""
-    self.state = self.env.reset()
+    self.obs = self.env.reset()
 
-  def get_action(self, agent: BaseAgent):
-    """Use the agent to get actions.
+  def compute_action(self, agent: BaseAgent):
+    """Compute Actions from the agent.
 
-    This method should be overridden to
-    make use of the agent.
+    Note the conversion to list. This is
+    because the underlying act function handles
+    batches and not single instances.
     """
-    return agent.act([self.state])[0][0]
+    return agent.act([self.obs])[0][0]
 
-  def process_transition(self, history: list,
+  def process_transition(self, history,
                          transition: tuple) -> list:
-    """Process the transition tuple and update history.
+    if history is None:
+      history = init_run_history(self.env.observation_space,
+                                 self.env.action_space)
 
-    This routine takes the transition tuple of
-    (state, action, reward, next_state, done, info),
-    applies transformation and appends to the history
-    list. This method should be overridden for any
-    non-trivial transformations needed, for instance
-    conversion of boolean done to stack of ints.
-    """
-    history.append(transition)
+    append_run_history(history, *transition[:-1])
     return history
 
   def rollout(self, agent, steps: int = None,
               render: bool = False, fps: int = 30):
-    """Execute a rollout of the given environment.
-
-    This is a simple utility and the main entrypoint to
-    the runner. It allows flags for rendering and the
-    maximum number of steps to execute in the current
-    rollout.
-    """
-    assert self.state is not None, """state is not defined,
-    please use `.reset()`
+    assert self.obs is not None, """state is not defined,
+    please `reset()`
     """
 
     steps = steps or self.MAX_STEPS
@@ -72,14 +61,14 @@ class GymRunner(BaseRunner):
       self.env.render()
       time.sleep(1. / fps)
 
-    history = []
+    history = None
 
     while steps:
-      action = self.get_action(agent)
+      action = self.compute_action(agent)
       next_state, reward, done, info = self.env.step(action)
 
       history = self.process_transition(history,
-                                        (self.state, action,
+                                        (self.obs, action,
                                          reward, next_state, done,
                                          info))
 
@@ -91,7 +80,7 @@ class GymRunner(BaseRunner):
         break
 
       steps -= 1
-      self.state = next_state
+      self.obs = next_state
 
     return history
 
