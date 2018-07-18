@@ -19,6 +19,7 @@ class MultiEnvs(MultiProcWrapper):
   """
   def __init__(self, make_env_fn, n_envs: int = 1, base_seed: int = 0,
                daemon: bool = True, autostart: bool = True):
+    self.observation_space, self.action_space = get_gym_spaces(make_env_fn)
     obj_fns = [
         functools.partial(self.make_env, make_env_fn,
                           None if base_seed is None else base_seed + rank)
@@ -34,6 +35,9 @@ class MultiEnvs(MultiProcWrapper):
 
   def close(self):
     self.exec_remote('close')
+
+  def render(self, env_ids: list):
+    self.exec_remote('render', proc_list=env_ids)
 
   @staticmethod
   def make_env(make_env_fn, seed: int = None):

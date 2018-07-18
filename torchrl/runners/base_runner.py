@@ -16,12 +16,7 @@ class BaseRunner(metaclass=abc.ABCMeta):
     raise NotImplementedError
 
   @abc.abstractmethod
-  def reset(self):
-    """Reset the environment."""
-    raise NotImplementedError
-
-  @abc.abstractmethod
-  def compute_action(self, agent: BaseAgent):
+  def compute_action(self, agent: BaseAgent, obs_list: list):
     """Use the agent to get actions.
 
     This method should be overridden to
