@@ -12,6 +12,14 @@ torchrl.utils.cli module
     :undoc-members:
     :show-inheritance:
 
+torchrl.utils.gym\_utils module
+-------------------------------
+
+.. automodule:: torchrl.utils.gym_utils
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 torchrl.utils.misc module
 -------------------------
 

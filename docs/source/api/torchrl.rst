@@ -10,6 +10,7 @@ Subpackages
     torchrl.policies
     torchrl.problems
     torchrl.registry
+    torchrl.runners
     torchrl.storage
     torchrl.utils
 
