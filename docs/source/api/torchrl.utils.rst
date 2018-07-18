@@ -28,6 +28,22 @@ torchrl.utils.misc module
     :undoc-members:
     :show-inheritance:
 
+torchrl.utils.multi\_envs module
+--------------------------------
+
+.. automodule:: torchrl.utils.multi_envs
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+torchrl.utils.multi\_proc\_wrapper module
+-----------------------------------------
+
+.. automodule:: torchrl.utils.multi_proc_wrapper
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 torchrl.utils.nop module
 ------------------------
 
