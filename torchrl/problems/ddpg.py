@@ -1,9 +1,10 @@
 import torch
-from ..registry import Problem
+
+from .gym_problem import GymProblem
 from ..storage import ReplayBuffer
 
 
-class DDPGProblem(Problem):
+class DDPGProblem(GymProblem):
   def __init__(self, hparams, problem_args, *args, **kwargs):
     super(DDPGProblem, self).__init__(hparams, problem_args, *args, **kwargs)
 

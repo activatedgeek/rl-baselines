@@ -3,7 +3,7 @@ import gym
 
 from .base_runner import BaseRunner
 from ..agents import BaseAgent
-from ..episode_runner import MultiEnvs
+from ..utils import MultiGymEnvs
 from ..utils.gym_utils import init_run_history
 from ..utils.gym_utils import append_run_history
 
@@ -22,7 +22,7 @@ class GymRunner(BaseRunner):
 
     self.n_envs = n_envs
     self.env_id = env_id
-    self.envs = MultiEnvs(self.make_env, n_envs=n_envs, base_seed=seed)
+    self.envs = MultiGymEnvs(self.make_env, n_envs=n_envs, base_seed=seed)
 
     self.obs = [None] * n_envs
 

@@ -1,9 +1,9 @@
 import torch
 
-from ..registry import Problem
+from .gym_problem import GymProblem
 
 
-class A2CProblem(Problem):
+class A2CProblem(GymProblem):
   def train(self, history_list: list):
     history_list = [
         tuple([item.to(self.device) for item in history])

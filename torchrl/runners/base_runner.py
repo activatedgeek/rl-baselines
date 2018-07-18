@@ -54,3 +54,8 @@ class BaseRunner(metaclass=abc.ABCMeta):
     rollout.
     """
     raise NotImplementedError
+
+  @abc.abstractmethod
+  def close(self):
+    """Method to cleanup the runner instance."""
+    raise NotImplementedError

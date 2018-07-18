@@ -1,11 +1,11 @@
 # pylint: disable=redefined-outer-name
 
-import gym
 import pytest
 import torchrl.registry as registry
 import torchrl.utils as utils
 import torchrl.utils.cli as cli
 import torchrl.problems.base_hparams as base_hparams
+from torchrl.problems.gym_problem import GymProblem
 from torchrl.agents.gym_random_agent import GymRandomAgent
 
 
@@ -19,12 +19,13 @@ def problem_argv(request):
   argv = ['--{}={}'.format(key, value) for key, value in args_dict.items()]
 
   @registry.register_problem  # pylint: disable=unused-variable
-  class RandomGymProblem(registry.Problem):
-    def make_env(self):
-      return gym.make(env_id)
+  class RandomGymProblem(GymProblem):
+    def __init__(self, *args, **kwargs):
+      self.env_id = env_id
+      super(RandomGymProblem, self).__init__(*args, **kwargs)
 
     def init_agent(self):
-      observation_space, action_space = utils.get_gym_spaces(self.make_env)
+      observation_space, action_space = utils.get_gym_spaces(self.runner.make_env)
 
       return GymRandomAgent(observation_space, action_space)
 
