@@ -5,10 +5,7 @@ from .gym_problem import GymProblem
 
 class A2CProblem(GymProblem):
   def train(self, history_list: list):
-    history_list = [
-        tuple([item.to(self.device) for item in history])
-        for history in history_list
-    ]
+    history_list = self.hist_to_tensor(history_list, device=self.device)
 
     batch_history = self.merge_histories(*history_list)
     returns = torch.cat([

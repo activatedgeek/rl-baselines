@@ -16,7 +16,8 @@ class MultiGymEnvs(MultiProcWrapper):
                           None if base_seed is None else base_seed + rank)
         for rank in range(1, n_envs + 1)
     ]
-    super(MultiGymEnvs, self).__init__(obj_fns, daemon=daemon, autostart=autostart)
+    super(MultiGymEnvs, self).__init__(obj_fns, daemon=daemon,
+                                       autostart=autostart)
 
   def reset(self, env_ids: list):
     return self.exec_remote('reset', proc_list=env_ids)

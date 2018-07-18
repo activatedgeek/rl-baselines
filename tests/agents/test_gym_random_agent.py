@@ -25,7 +25,8 @@ def problem_argv(request):
       super(RandomGymProblem, self).__init__(*args, **kwargs)
 
     def init_agent(self):
-      observation_space, action_space = utils.get_gym_spaces(self.runner.make_env)
+      observation_space, action_space = utils.get_gym_spaces(
+          self.runner.make_env)
 
       return GymRandomAgent(observation_space, action_space)
 

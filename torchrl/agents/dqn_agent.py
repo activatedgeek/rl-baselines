@@ -1,6 +1,5 @@
 from copy import deepcopy
 import torch
-import numpy as np
 from torch.optim import Adam
 
 from .base_agent import BaseAgent

@@ -1,7 +1,6 @@
 import abc
 import warnings
 import argparse
-import numpy as np
 import os
 import torch
 import glob
@@ -175,30 +174,10 @@ class Problem(metaclass=abc.ABCMeta):
     """
     raise NotImplementedError
 
+  @abc.abstractmethod
   def eval(self, epoch):
-    """
-    This method is called after a rollout and must
-    contain the logic for updating the agent's weights
-    :return:
-    """
-    self.set_agent_train_mode(False)
-
-    eval_runner = self.make_runner(n_envs=1)
-    eval_rewards = []
-    for _ in range(self.args.num_eval):
-      eval_history = eval_runner.rollout(self.agent)
-      _, _, reward_history, _, _ = eval_history[0]
-      eval_rewards.append(np.sum(reward_history, axis=0))
-    eval_runner.close()
-
-    log_avg_reward, log_std_reward = np.average(eval_rewards), \
-                                     np.std(eval_rewards)
-    self.logger.add_scalar('eval_episode/avg_reward', log_avg_reward,
-                           global_step=epoch)
-    self.logger.add_scalar('eval_episode/std_reward', log_std_reward,
-                           global_step=epoch)
-
-    return log_avg_reward, log_std_reward
+    """This must implement the evaluation scheme."""
+    raise NotImplementedError
 
   def run(self):
     """
@@ -227,7 +206,7 @@ class Problem(metaclass=abc.ABCMeta):
       history_list = self.runner.rollout(self.agent, steps=params.rollout_steps)
 
       self.set_agent_train_mode(True)
-      loss_dict = self.train(self.hist_to_tensor(history_list))
+      loss_dict = self.train(history_list)
 
       if epoch % self.args.log_interval == 0:
         for loss_label, loss_value in loss_dict.items():
@@ -269,24 +248,3 @@ class Problem(metaclass=abc.ABCMeta):
 
     self.runner.close()
     self.logger.close()
-
-  @staticmethod
-  def hist_to_tensor(history_list):
-
-    def from_numpy(item):
-      tensor = torch.from_numpy(item)
-      if isinstance(tensor, torch.DoubleTensor):
-        tensor = tensor.float()
-      return tensor
-
-    return [
-        tuple([from_numpy(item) for item in history])
-        for history in history_list
-    ]
-
-  @staticmethod
-  def merge_histories(*history_list):
-    return tuple([
-        torch.cat(hist, dim=0)
-        for hist in zip(*history_list)
-    ])

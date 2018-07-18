@@ -57,7 +57,7 @@ class GymRunner(BaseRunner):
     return history
 
   def rollout(self, agent, steps: int = None,
-              render: bool = False, fps: int = 30):
+              render: bool = False, fps: int = 30) -> list:
     assert self.obs is not None, """state is not defined,
     please `reset()`
     """

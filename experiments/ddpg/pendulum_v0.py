@@ -1,4 +1,3 @@
-import gym
 import torchrl.registry as registry
 import torchrl.utils as utils
 from torchrl.problems import base_hparams, DDPGProblem
