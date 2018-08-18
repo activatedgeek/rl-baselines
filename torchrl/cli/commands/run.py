@@ -89,7 +89,7 @@ def do_run(problem,
 @click.option('--hparam-set',
               help=('Hyperparameter set name. If not provided, '
                     'first associated used by default.'),
-              envvar='HPARAM_SET')
+              envvar='HPARAM_SET', metavar='')
 @click.option('--extra-hparams',
               help='Comma-separated list of extra key-value pairs.',
               envvar='EXTRA_HPARAMS', metavar='',
