@@ -1,6 +1,7 @@
 import sys
 import os
 from setuptools import setup, find_packages
+from setuptools.command.test import test as TestCommand
 
 CURRENT_PYTHON = sys.version_info[:2]
 MIN_PYTHON = (3, 6)
@@ -18,6 +19,9 @@ if CURRENT_PYTHON < MIN_PYTHON:
 with open('requirements.txt', 'r') as f:
   install_requires = f.readlines()
 
+with open('requirements_test.txt', 'r') as f:
+  test_requires = f.readlines()
+
 with open('requirements_dev.txt', 'r') as f:
   dev_install_requires = f.readlines()
 
@@ -34,6 +38,19 @@ else:
 
 with open('README.rst') as f:
   README = f.read()
+
+
+class PyTest(TestCommand):
+  def initialize_options(self):
+    TestCommand.initialize_options(self)
+    self.pytest_args = ""
+
+  def run_tests(self):
+    import shlex
+    import pytest
+    errno = pytest.main(shlex.split(self.pytest_args))
+    sys.exit(errno)
+
 
 setup(name='torchrl',
       description='Reinforcement Learning for PyTorch',
@@ -57,6 +74,7 @@ setup(name='torchrl',
           'experiments',
           'experiments.*'
       ]),
+      tests_require=test_requires,
       install_requires=install_requires,
       extras_require={
           'dev': dev_install_requires,
@@ -66,4 +84,5 @@ setup(name='torchrl',
           'console_scripts': [
               'torchrl=torchrl.cli.boot:main',
           ]
-      })
+      },
+      cmdclass={"test": PyTest})
