@@ -19,12 +19,6 @@ if CURRENT_PYTHON < MIN_PYTHON:
 with open('requirements.txt', 'r') as f:
   install_requires = f.readlines()
 
-with open('requirements_test.txt', 'r') as f:
-  test_requires = f.readlines()
-
-with open('requirements_dev.txt', 'r') as f:
-  dev_install_requires = f.readlines()
-
 with open('requirements_extra.txt', 'r') as f:
   extra_install_requires = f.readlines()
 
@@ -34,7 +28,7 @@ if os.path.isfile('VERSION'):
 else:
   VERSION = os.environ.get('TRAVIS_PULL_REQUEST_BRANCH') or \
             os.environ.get('TRAVIS_BRANCH') or \
-            'dev'
+            '0.0.dev0'
 
 with open('README.rst') as f:
   README = f.read()
@@ -74,10 +68,19 @@ setup(name='torchrl',
           'experiments',
           'experiments.*'
       ]),
-      tests_require=test_requires,
+      tests_require=[
+          'pylint~=2.1.0',
+          'pytest~=3.7.0'
+      ],
       install_requires=install_requires,
       extras_require={
-          'dev': dev_install_requires,
+          'docs': [
+              'sphinx~=1.7.0',
+              'sphinx-nameko-theme~=0.0.0',
+              'sphinx-gallery~=0.2.0',
+              'm2r~=0.2.0',
+              'sphinxcontrib-programoutput~=0.11',
+          ],
           'extra': extra_install_requires,
       },
       entry_points={
