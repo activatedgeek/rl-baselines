@@ -1,6 +1,6 @@
 import click
 import json
-import ruamel.yaml as yaml
+from ruamel import yaml
 import sys
 
 from ... import registry

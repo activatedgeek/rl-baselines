@@ -31,7 +31,7 @@ cli.add_command(resume)
 
 
 def main():
-  cli(obj={
+  cli(obj={  # pylint: disable=unexpected-keyword-arg,no-value-for-parameter
       'extra_hparams': {},
       'resume': False,
       'start_epoch': None

@@ -1,10 +1,10 @@
 # pylint: disable=redefined-outer-name
 
 import pytest
-import torchrl.registry as registry
-import torchrl.utils as utils
+from torchrl import registry
+from torchrl import utils
 from torchrl.cli.commands.run import do_run
-import torchrl.problems.base_hparams as base_hparams
+from torchrl.problems import base_hparams
 from torchrl.problems.gym_problem import GymProblem
 from torchrl.agents.gym_random_agent import GymRandomAgent
 
@@ -17,7 +17,7 @@ def problem_argv(request):
       'hparam_set': 'random_gym_problem',
       'seed': None,
       'extra_hparams': {
-        'num_total_steps': 100,
+          'num_total_steps': 100,
       },
       'log_interval': 50,
       'eval_interval': 50,

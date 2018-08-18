@@ -1,6 +1,6 @@
 import click
 import os
-import ruamel.yaml as yaml
+from ruamel import yaml
 
 from .run import do_run
 

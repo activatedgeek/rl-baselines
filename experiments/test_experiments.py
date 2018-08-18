@@ -9,7 +9,7 @@ performance metrics.
 """
 
 import pytest
-import torchrl.registry as registry
+from torchrl import registry
 from torchrl.cli.commands.run import do_run
 
 
@@ -27,7 +27,7 @@ def problem_argv(request):
       'hparam_set': hparam_set_id,
       'seed': None,
       'extra_hparams': {
-        'num_total_steps': 100,
+          'num_total_steps': 100,
       },
       'log_interval': 50,
       'eval_interval': 50,

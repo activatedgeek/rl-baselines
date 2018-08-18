@@ -2,7 +2,7 @@ import argparse
 import ast
 import click
 import os
-import ruamel.yaml as yaml
+from ruamel import yaml
 import torch
 import warnings
 
@@ -60,16 +60,16 @@ def do_run(problem,
     args_file_path = os.path.join(log_dir, 'args.yaml')
 
     args = {
-      'problem': problem,
-      'seed': kwargs.get('seed', None),
+        'problem': problem,
+        'seed': kwargs.get('seed', None),
     }
 
     with open(hparams_file_path, 'w') as hparams_file, \
          open(args_file_path, 'w') as args_file:
       yaml.safe_dump(hparams.__dict__, stream=hparams_file,
-                default_flow_style=False)
+                     default_flow_style=False)
       yaml.safe_dump(args, stream=args_file,
-                default_flow_style=False)
+                     default_flow_style=False)
 
   problem = problem_cls(hparams, argparse.Namespace(**kwargs),
                         log_dir,
@@ -87,7 +87,8 @@ def do_run(problem,
                 envvar='PROBLEM', metavar='<problem>',
                 required=True)
 @click.option('--hparam-set',
-              help='Hyperparameter set name. If not provided, first associated used by default.',
+              help=('Hyperparameter set name. If not provided, '
+                    'first associated used by default.'),
               envvar='HPARAM_SET')
 @click.option('--extra-hparams',
               help='Comma-separated list of extra key-value pairs.',

@@ -3,7 +3,6 @@ import argparse
 import os
 import torch
 import glob
-import ruamel.yaml as yaml
 import cloudpickle
 from tqdm import tqdm
 from tensorboardX import SummaryWriter
