@@ -1,7 +1,10 @@
 import argparse
 import ast
 import click
+import os
+import ruamel.yaml as yaml
 import torch
+import warnings
 
 
 from ... import registry
@@ -22,6 +25,61 @@ class ExtraHParamType(click.ParamType):
       return [key, val]
     except ValueError:
       self.fail('%s is not a input' % value, param, ctx)
+
+
+def do_run(problem,
+           hparam_set: str = None,
+           extra_hparams: dict = None,
+           progress: bool = False,
+           cuda: bool = False,
+           device: str = None,
+           log_dir: str = None,
+           resume: bool = False,
+           start_epoch: int = None,
+           **kwargs):
+  problem_cls = registry.get_problem(problem)
+  if not hparam_set:
+    hparam_set_list = registry.get_problem_hparam(problem)
+    assert hparam_set_list
+    hparam_set = hparam_set_list[0]
+
+  hparams = registry.get_hparam(hparam_set)()
+  if extra_hparams:
+    hparams.update(extra_hparams)
+
+  cuda = cuda and torch.cuda.is_available()
+  if not cuda:
+    device = 'cpu'
+
+  if log_dir:
+    os.makedirs(log_dir, exist_ok=True)
+    if os.listdir(log_dir):
+      warnings.warn('Directory "{}" not empty!'.format(log_dir))
+
+    hparams_file_path = os.path.join(log_dir, 'hparams.yaml')
+    args_file_path = os.path.join(log_dir, 'args.yaml')
+
+    args = {
+      'problem': problem,
+      'seed': kwargs.get('seed', None),
+    }
+
+    with open(hparams_file_path, 'w') as hparams_file, \
+         open(args_file_path, 'w') as args_file:
+      yaml.safe_dump(hparams.__dict__, stream=hparams_file,
+                default_flow_style=False)
+      yaml.safe_dump(args, stream=args_file,
+                default_flow_style=False)
+
+  problem = problem_cls(hparams, argparse.Namespace(**kwargs),
+                        log_dir,
+                        device=device,
+                        show_progress=progress)
+
+  if resume:
+    problem.load_checkpoint(log_dir, epoch=start_epoch)
+
+  problem.run()
 
 
 @click.command()
@@ -65,33 +123,30 @@ class ExtraHParamType(click.ParamType):
 @click.pass_context
 def run(ctx, problem,
         hparam_set: str = None,
-        extra_hparams: dict = None,
         progress: bool = False,
         cuda: bool = False,
         device: str = None,
         log_dir: str = None,
         **kwargs):
-  """Run Experiments."""
+  """Run Experiments.
 
-  problem_cls = registry.get_problem(problem)
-  if not hparam_set:
-    hparam_set_list = registry.get_problem_hparam(problem)
-    assert hparam_set_list
-    hparam_set = hparam_set_list[0]
+  This initializes the Problem class with
+  a given Hyperparameter Set. If the hyperparameter
+  set is not provided, the first set from the list
+  problem's hyperparam sets is used. Arbitrary key
+  value pairs can be provided to extend the set from
+  command line.
+  """
 
-  hparams = registry.get_hparam(hparam_set)()
-  if ctx:
-    hparams.update(ctx.obj['extra_hparams'])
-  elif extra_hparams:
-    hparams.update(extra_hparams)
+  # Read custom transformation arbitrary CLI key value pairs.
+  extra_hparams = ctx.obj.get('extra_hparams')
+  kwargs.pop('extra_hparams')
 
-  cuda = cuda and torch.cuda.is_available()
-  if not cuda:
-    device = 'cpu'
-
-  problem = problem_cls(hparams, argparse.Namespace(**kwargs),
-                        log_dir,
-                        device=device,
-                        show_progress=progress)
-
-  problem.run()
+  do_run(problem,
+         hparam_set=hparam_set,
+         extra_hparams=extra_hparams,
+         progress=progress,
+         cuda=cuda,
+         device=device,
+         log_dir=log_dir,
+         **kwargs)

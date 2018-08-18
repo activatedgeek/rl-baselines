@@ -28,3 +28,15 @@ def cli(usr_dirs):
 cli.add_command(group_list)
 cli.add_command(run)
 cli.add_command(resume)
+
+
+def main():
+  cli(obj={
+      'extra_hparams': {},
+      'resume': False,
+      'start_epoch': None
+  })
+
+
+if __name__ == '__main__':
+  main()

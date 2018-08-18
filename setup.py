@@ -57,7 +57,7 @@ setup(name='torchrl',
       },
       entry_points={
         'console_scripts': [
-          'torchrl=torchrl.cli:main',
+          'torchrl=torchrl.cli.boot:main',
         ]
       }
 )
