@@ -48,6 +48,7 @@ setup(name='torchrl',
           'Intended Audience :: Developers',
           'Intended Audience :: Science/Research',
           'License :: OSI Approved :: Apache Software License',
+          'Programming Language :: Python :: 3.6',
           'Topic :: Scientific/Engineering :: Artificial Intelligence',
       ],
       packages=find_packages(exclude=[
