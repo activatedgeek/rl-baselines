@@ -96,8 +96,7 @@ class Problem(metaclass=abc.ABCMeta):
   @abc.abstractmethod
   def init_agent(self) -> BaseAgent:
     """
-    Use this method to initialize the learner using `self.args`
-    object
+    Use this method to initialize the learner
     :return: BaseLearner
     """
     raise NotImplementedError
