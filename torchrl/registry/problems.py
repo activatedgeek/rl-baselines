@@ -105,7 +105,7 @@ class Problem(metaclass=abc.ABCMeta):
         use :class:`~torchrl.registry.problems.HParams` instead. As a temporary
         usage fix, convert any dictionary into `argparse.Namespace` using
         `argparse.Namespace(**mydict)`. Tracked by
-        `#61 <https://github.com/activatedgeek/torchrl/issues/60>`_.
+        `#61 <https://github.com/activatedgeek/torchrl/issues/61>`_.
       * Allow setting `checkpoint_prefix` from CLI. Tracked by
         `#60 <https://github.com/activatedgeek/torchrl/issues/60>`_.
   """
@@ -244,11 +244,20 @@ class Problem(metaclass=abc.ABCMeta):
     :meth:`~torchrl.problems.gym_problem.GymProblem.hist_to_tensor` for a
     sample routine.
 
+    .. note::
+
+        It is a good idea to always use
+        :meth:`~torchrl.registry.problems.Problem.set_agent_train_mode`
+        appropriately here.
+
     Args:
         history_list (list): A list of histories. This will typically be
           returned by the
           :meth:`~torchrl.runners.base_runner.BaseRunner.rollout` method of the
           runner.
+
+    Returns:
+        dict: A Python dictionary containing labeled losses.
     """
     raise NotImplementedError
 
@@ -260,6 +269,14 @@ class Problem(metaclass=abc.ABCMeta):
     evaluation of the trained model. This is also responsible
     for any metric logging using the `self.logger` object.
 
+    :code:`self.args.num_eval` should be a helpful variable.
+
+    .. note::
+
+        It is a good idea to always use
+        :meth:`~torchrl.registry.problems.Problem.set_agent_train_mode` to
+        set training :code:`False` here.
+
     Args:
         epoch (int): Epoch number in question.
     """
@@ -270,7 +287,10 @@ class Problem(metaclass=abc.ABCMeta):
     This is the entrypoint to a problem class and can be overridden
     if desired. However, a common rollout, train and eval loop has
     already been provided here. All variables for logging are prefixed
-    with "log_"
+    with "log\_".
+
+    :code:`self.args.log_interval` and :code:`self.args.eval_interval`
+    should be helpful variables.
 
     .. note::
 
