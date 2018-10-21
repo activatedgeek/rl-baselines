@@ -104,8 +104,10 @@ class Problem(metaclass=abc.ABCMeta):
       * Remove usage of `argparse.Namespace` for `problem_args` and
         use :class:`~torchrl.registry.problems.HParams` instead. As a temporary
         usage fix, convert any dictionary into `argparse.Namespace` using
-        `argparse.Namespace(**mydict)`.
-      * Allow setting `checkpoint_prefix` from CLI
+        `argparse.Namespace(**mydict)`. Tracked by
+        `#61 <https://github.com/activatedgeek/torchrl/issues/60>`_.
+      * Allow setting `checkpoint_prefix` from CLI. Tracked by
+        `#60 <https://github.com/activatedgeek/torchrl/issues/60>`_.
   """
 
   def __init__(self, hparams: HParams,
