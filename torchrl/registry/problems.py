@@ -28,7 +28,8 @@ class HParams:
             hparams.paramA = 'myparam'
             hparams.paramB = 10
 
-      or just send in a dictionary object containing all the relevant key/value pairs.
+      or just send in a dictionary object containing all the relevant key/value
+      pairs.
 
       .. code-block:: python
 
@@ -48,7 +49,8 @@ class HParams:
           assert hparams.paramB == 'otherparam'
 
   Args:
-    kwargs (dict): Python dictionary representing named hyperparameters and values.
+    kwargs (dict): Python dictionary representing named hyperparameters and
+    values.
 
   """
   def __init__(self, kwargs=None):
@@ -87,18 +89,22 @@ class Problem(metaclass=abc.ABCMeta):
   problem.
 
   Args:
-      hparams (:class:`~torchrl.registry.problems.HParams`): Object containing all named-hyperparameters.
-      problem_args (:class:`argparse.Namespace`): Argparse namespace object containing
-        Problem arguments like `seed`, `log_interval`, `eval_interval`.
+      hparams (:class:`~torchrl.registry.problems.HParams`): Object containing
+        all named-hyperparameters.
+      problem_args (:class:`argparse.Namespace`): Argparse namespace object
+        containing Problem arguments like `seed`, `log_interval`,
+        `eval_interval`.
       log_dir (str): Path to log directory.
       device (str): String passed to `torch.device()`.
-      show_progress (bool): If true, an animated progress is shown based on `tqdm`.
+      show_progress (bool): If true, an animated progress is shown based on
+        `tqdm`.
       checkpoint_prefix (str): Prefix for the saved checkpoint files.
 
   Todo:
       * Remove usage of `argparse.Namespace` for `problem_args` and
-        use :class:`~torchrl.registry.problems.HParams` instead. As a temporary usage fix,
-        convert any dictionary into `argparse.Namespace` using `argparse.Namespace(**mydict)`.
+        use :class:`~torchrl.registry.problems.HParams` instead. As a temporary
+        usage fix, convert any dictionary into `argparse.Namespace` using
+        `argparse.Namespace(**mydict)`.
       * Allow setting `checkpoint_prefix` from CLI
   """
 
@@ -131,12 +137,13 @@ class Problem(metaclass=abc.ABCMeta):
     This method loads the latest checkpoint from a directory.
     It also updates the `self.start_epoch` attribute so that any
     further calls to save_checkpoint don't overwrite the previously
-    saved checkpoints. The file name format is :code:`<CHECKPOINT_PREFIX>-<EPOCH>.ckpt`.
+    saved checkpoints. The file name format is
+    :code:`<CHECKPOINT_PREFIX>-<EPOCH>.ckpt`.
 
     Args:
         load_dir (str): Path to directory containing checkpoint files.
-        epoch (int): Epoch number to load. If :code:`None`, then the file with the
-          latest timestamp is loaded from the given directory.
+        epoch (int): Epoch number to load. If :code:`None`, then the file with
+          the latest timestamp is loaded from the given directory.
     """
     if epoch:
       checkpoint_file_path = os.path.join(
@@ -176,7 +183,7 @@ class Problem(metaclass=abc.ABCMeta):
     one should construct an agent here.
 
     Returns:
-        Any agent that extends :class:`~torchrl.agents.base_agent.BaseAgent`.
+        :class:`~torchrl.agents.base_agent.BaseAgent`: Any derived agent class.
     """
     raise NotImplementedError
 
@@ -188,7 +195,8 @@ class Problem(metaclass=abc.ABCMeta):
     one should construct an environment runner here.
 
     Returns:
-        Any runner that extends :class:`~torchrl.runners.base_runner.BaseRunner`.
+        :class:`~torchrl.runners.base_runner.BaseRunner`: Any derived runner
+          class.
     """
     raise NotImplementedError
 
@@ -197,7 +205,7 @@ class Problem(metaclass=abc.ABCMeta):
     This routine is takes the agent's :code:`models` attribute
     and applies the training flag.
 
-    See https://pytorch.org/docs/stable/nn.html?highlight=train#torch.nn.Module.train.
+    See https://pytorch.org/docs/stable/nn.html#torch.nn.Module.train.
 
     Args:
         flag (bool): :code:`True` or :code:`False`
@@ -210,7 +218,7 @@ class Problem(metaclass=abc.ABCMeta):
     This routine is takes the agent's :code:`models` attribute
     and sends them to a device.
 
-    See https://pytorch.org/docs/stable/nn.html?highlight=train#torch.nn.Module.to.
+    See https://pytorch.org/docs/stable/nn.html#torch.nn.Module.to.
 
     Args:
         device (:class:`torch.device`):
@@ -236,8 +244,9 @@ class Problem(metaclass=abc.ABCMeta):
 
     Args:
         history_list (list): A list of histories. This will typically be
-          returned by the :meth:`~torchrl.runners.base_runner.BaseRunner.rollout`
-          method of the runner.
+          returned by the
+          :meth:`~torchrl.runners.base_runner.BaseRunner.rollout` method of the
+          runner.
     """
     raise NotImplementedError
 
@@ -259,28 +268,34 @@ class Problem(metaclass=abc.ABCMeta):
     This is the entrypoint to a problem class and can be overridden
     if desired. However, a common rollout, train and eval loop has
     already been provided here. All variables for logging are prefixed
-    with "log\_"
+    with "log_"
 
     .. note::
 
         This precoded routine implements the following general steps
 
-          * Set agent to train mode using :meth:`~torchrl.registry.problems.Problem.set_agent_train_mode`.
+          * Set agent to train mode using
+            :meth:`~torchrl.registry.problems.Problem.set_agent_train_mode`.
 
-          * Rollout trajectories using runner's :meth:`~torchrl.runners.base_runner.BaseRunner.rollout`.
+          * Rollout trajectories using runner's
+            :meth:`~torchrl.runners.base_runner.BaseRunner.rollout`.
 
           * Unset agent's train mode.
 
-          * Run the training routine using :meth:`~torchrl.registry.problems.Problem.train` which could
-            potentially be using agent's :meth:`~torchrl.agents.base_agent.BaseAgent.learn`.
+          * Run the training routine using
+            :meth:`~torchrl.registry.problems.Problem.train` which could
+            potentially be using agent's
+            :meth:`~torchrl.agents.base_agent.BaseAgent.learn`.
 
-          * Evaluate the learned agent using :meth:`~torchrl.registry.problems.Problem.eval`.
+          * Evaluate the learned agent using
+            :meth:`~torchrl.registry.problems.Problem.eval`.
 
-          * Periodically log and save checkpoints using :meth:`~torchrl.registry.problems.Problem.save_checkpoint`.
+          * Periodically log and save checkpoints using
+            :meth:`~torchrl.registry.problems.Problem.save_checkpoint`.
 
-        Since, this routine handles multiple parallel trajectories, care must be taken to reset the
-        environment instances (this should be handled by the appropriate runner or as desired).
-
+        Since, this routine handles multiple parallel trajectories, care must be
+        taken to reset the environment instances (this should be handled by the
+        appropriate runner or as desired).
     """
     params = self.hparams
     set_seeds(self.args.seed)
