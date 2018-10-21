@@ -174,6 +174,9 @@ def list_problem_hparams():
           {
             "problem_name": [
               "hparam_set1", "hparam_set2"
+            ],
+            "other_problem": [
+              "other_problem_hparam1"
             ]
           }
 
@@ -203,7 +206,7 @@ def remove_hparam(hparam_set_id: str):
   Args:
       hparam_set_id (str): Name of registered hyperparameter.
   """
-  return _common_remove(_ALL_HPARAMS, hparam_set_id)
+  _common_remove(_ALL_HPARAMS, hparam_set_id)
 
 
 def list_problems():
@@ -236,4 +239,4 @@ def remove_problem(problem_id: str):
   Args:
       problem_id (str): Name of registered problem.
   """
-  return _common_remove(_ALL_PROBLEMS, problem_id)
+  _common_remove(_ALL_PROBLEMS, problem_id)
