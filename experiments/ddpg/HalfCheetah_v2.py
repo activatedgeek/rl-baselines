@@ -6,7 +6,6 @@ from torchrl.agents import BaseDDPGAgent
 @registry.register_problem
 class DDPGHalfCheetah(DDPGProblem):
   def __init__(self, *args, **kwargs):
-    self.env_id = 'HalfCheetah-v2'
     super(DDPGHalfCheetah, self).__init__(*args, **kwargs)
 
   def init_agent(self):
@@ -24,6 +23,7 @@ class DDPGHalfCheetah(DDPGProblem):
     return agent
   @staticmethod
   def hparams_ddpg_half_cheetah():
+  	params.env_id = 'HalfCheetah-v2'
     params = base_hparams.base_ddpg()
 
     params.num_processes = 16
