@@ -218,7 +218,7 @@ class Problem(metaclass=abc.ABCMeta):
     .. note::
 
         It is a good idea to always use
-        :meth:`~torchrl.registry.problems.Problem.set_agent_train_mode`
+        :meth:`~torchrl.agents.base_agent.BaseAgent.train`
         appropriately here.
 
     Args:
@@ -245,7 +245,7 @@ class Problem(metaclass=abc.ABCMeta):
     .. note::
 
         It is a good idea to always use
-        :meth:`~torchrl.registry.problems.Problem.set_agent_train_mode` to
+        :meth:`~torchrl.agents.base_agent.BaseAgent.train` to
         set training :code:`False` here.
 
     Args:
@@ -268,7 +268,7 @@ class Problem(metaclass=abc.ABCMeta):
         This precoded routine implements the following general steps
 
           * Set agent to train mode using
-            :meth:`~torchrl.registry.problems.Problem.set_agent_train_mode`.
+            :meth:`~torchrl.agents.base_agent.BaseAgent.train`.
 
           * Rollout trajectories using runner's
             :meth:`~torchrl.runners.base_runner.BaseRunner.rollout`.
