@@ -23,7 +23,7 @@ class DDPGHalfCheetah(DDPGProblem):
     return agent
   @staticmethod
   def hparams_ddpg_half_cheetah():
-  	params.env_id = 'HalfCheetah-v2'
+    params.env_id = 'HalfCheetah-v2'
     params = base_hparams.base_ddpg()
 
     params.num_processes = 16
