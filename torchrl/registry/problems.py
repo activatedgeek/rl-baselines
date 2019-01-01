@@ -129,8 +129,7 @@ class Problem(metaclass=abc.ABCMeta):
     self.runner = self.make_runner(n_envs=self.hparams.num_processes,
                                    seed=self.args.seed)
 
-    self.agent = self.init_agent()
-    self.set_agent_to_device(self.device)
+    self.agent = self.init_agent().to(self.device)
 
   def load_checkpoint(self, load_dir, epoch=None):
     """
@@ -199,32 +198,6 @@ class Problem(metaclass=abc.ABCMeta):
           class.
     """
     raise NotImplementedError
-
-  def set_agent_train_mode(self, flag: bool = True):
-    """
-    This routine is takes the agent's :code:`models` attribute
-    and applies the training flag.
-
-    See https://pytorch.org/docs/stable/nn.html#torch.nn.Module.train.
-
-    Args:
-        flag (bool): :code:`True` or :code:`False`
-    """
-    for model in self.agent.models:
-      model.train(flag)
-
-  def set_agent_to_device(self, device: torch.device):
-    """
-    This routine is takes the agent's :code:`models` attribute
-    and sends them to a device.
-
-    See https://pytorch.org/docs/stable/nn.html#torch.nn.Module.to.
-
-    Args:
-        device (:class:`torch.device`):
-    """
-    for model in self.agent.models:
-      model.to(device)
 
   @abc.abstractmethod
   def train(self, history_list: list) -> dict:
@@ -333,10 +306,10 @@ class Problem(metaclass=abc.ABCMeta):
       epoch_iterator = tqdm(epoch_iterator, unit='epochs')
 
     for epoch in epoch_iterator:
-      self.set_agent_train_mode(False)
+      self.agent.train(False)
       history_list = self.runner.rollout(self.agent, steps=params.rollout_steps)
 
-      self.set_agent_train_mode(True)
+      self.agent.train(True)
       loss_dict = self.train(history_list)
 
       if epoch % self.args.log_interval == 0:
