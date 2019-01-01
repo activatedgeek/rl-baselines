@@ -69,5 +69,5 @@ class BaseAgent(metaclass=abc.ABCMeta):
     with torch.no_grad():
       batch_obs_tensor = torch.from_numpy(
           np.array(obs)
-      ).float()
+      ).float().to(self.models[0].device)
     return batch_obs_tensor
