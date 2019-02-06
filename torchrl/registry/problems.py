@@ -346,7 +346,7 @@ class Problem(metaclass=abc.ABCMeta):
         self.eval(epoch)
         self.save_checkpoint(epoch)
 
-    if self.start_epoch + n_epochs % self.args.eval_interval is not 0:
+    if self.start_epoch + n_epochs % self.args.eval_interval != 0:
       self.eval(self.start_epoch + n_epochs)
       self.save_checkpoint(self.start_epoch + n_epochs)
 
