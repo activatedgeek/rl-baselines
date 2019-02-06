@@ -69,8 +69,8 @@ setup(name='torchrl',
           'experiments.*'
       ]),
       tests_require=[
-          'pylint~=2.1.0',
-          'pytest~=3.9.0'
+          'pylint>=2.2',
+          'pytest>=4.2'
       ],
       install_requires=install_requires,
       extras_require={
