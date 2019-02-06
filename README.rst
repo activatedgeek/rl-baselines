@@ -14,7 +14,7 @@ TorchRL
     :target: https://github.com/salmanazarr/torchrl
 
 +-----------------------------------------------+---------------------------------------------------------+
-| *Docs*: `<https://torchrl.sanyamkapoor.com>`_ | *Github*: `<https://github.com/salmanazarr/torchrl>`_ |
+| *Docs*: `<https://torchrl.sanyamkapoor.com>`_ |  *Github*: `<https://github.com/salmanazarr/torchrl>`_  |
 +-----------------------------------------------+---------------------------------------------------------+
 
 *TorchRL* provides highly modular and extensible approach to experimenting with
