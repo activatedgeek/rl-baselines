@@ -5,7 +5,7 @@ import torch
 import glob
 import cloudpickle
 from tqdm import tqdm
-from tensorboardX import SummaryWriter
+from torch.utils.tensorboard import SummaryWriter
 
 from ..agents import BaseAgent
 from ..utils import set_seeds, Nop
