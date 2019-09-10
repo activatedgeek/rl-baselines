@@ -19,7 +19,7 @@ class A2CCartpole(A2CProblem):
     return agent
 
   @staticmethod
-  def hparams():
+  def hparams_a2c_cartpole():
     params = base_hparams.base_pg()
 
     params.env_id = 'CartPole-v0'
