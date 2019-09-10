@@ -1,7 +1,6 @@
 # pylint: disable=redefined-outer-name
 
 import pytest
-import torch
 import argparse
 from torchrl import registry
 from torchrl import utils
@@ -62,7 +61,8 @@ def test_gym_agent(problem_argv):
     hparams = registry.get_hparam(hparam_set)()
     hparams.update(extra_hparams)
 
-    problem = problem_cls(hparams, argparse.Namespace(**kwargs), None, device='cpu')
+    problem = problem_cls(hparams, argparse.Namespace(**kwargs),
+                          None, device='cpu')
 
     problem.run()
 
