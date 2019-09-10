@@ -4,7 +4,6 @@ from torchrl.problems import base_hparams, PPOProblem
 from torchrl.agents import BasePPOAgent
 
 
-@registry.register_problem
 class PPOPendulum(PPOProblem):
   def init_agent(self):
     observation_space, action_space = utils.get_gym_spaces(self.runner.make_env)
