@@ -1,4 +1,3 @@
-from torchrl import registry
 from torchrl import utils
 from torchrl.problems import base_hparams, DQNProblem
 from torchrl.agents import BaseDQNAgent
