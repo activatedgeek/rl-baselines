@@ -62,11 +62,8 @@ def test_gym_agent(problem_argv):
     hparams = registry.get_hparam(hparam_set)()
     hparams.update(extra_hparams)
 
-    cuda = torch.cuda.is_available()
-
-    problem = problem_cls(hparams, argparse.Namespace(**kwargs), None)
+    problem = problem_cls(hparams, argparse.Namespace(**kwargs), None, device='cpu')
 
     problem.run()
 
   wrap(**problem_argv)
-
