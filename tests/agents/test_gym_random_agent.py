@@ -1,9 +1,10 @@
 # pylint: disable=redefined-outer-name
 
 import pytest
+import torch
+import argparse
 from torchrl import registry
 from torchrl import utils
-from torchrl.cli.commands.run import do_run
 from torchrl.problems import base_hparams
 from torchrl.problems.gym_problem import GymProblem
 from torchrl.agents.gym_random_agent import GymRandomAgent
@@ -55,5 +56,17 @@ def problem_argv(request):
     'Pendulum-v0',
 ], indirect=['problem_argv'])
 def test_gym_agent(problem_argv):
-  problem = problem_argv.pop('problem')
-  do_run(problem, **problem_argv)
+
+  def wrap(problem, hparam_set, extra_hparams, **kwargs):
+    problem_cls = registry.get_problem(problem)
+    hparams = registry.get_hparam(hparam_set)()
+    hparams.update(extra_hparams)
+
+    cuda = torch.cuda.is_available()
+
+    problem = problem_cls(hparams, argparse.Namespace(**kwargs), None)
+
+    problem.run()
+
+  wrap(**problem_argv)
+

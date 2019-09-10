@@ -1,10 +1,10 @@
 import abc
 import argparse
 import os
-import torch
 import glob
 import cloudpickle
 from tqdm import tqdm
+import torch
 from torch.utils.tensorboard import SummaryWriter
 
 from ..agents import BaseAgent

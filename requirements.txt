@@ -4,4 +4,4 @@ numpy
 ruamel.yaml
 torch>=1.2
 tensorflow>=1.14
-tqdm>=4.30
+tqdm

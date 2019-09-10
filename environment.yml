@@ -5,6 +5,8 @@ channels:
 dependencies:
   - python=3.7
   - pip
+  - ipykernel
+  - ipywidgets
   - future
   - numpy
   - ruamel.yaml
@@ -13,4 +15,4 @@ dependencies:
   - tensorflow=1.14.*
   - tensorboard=1.14.*
   - pip:
-      - gym>=0.10
+    - gym>=0.10

@@ -9,9 +9,9 @@ performance metrics.
 """
 
 import pytest
+import torch
+import argparse
 from torchrl import registry
-from torchrl.cli.commands.run import do_run
-
 
 problem_hparams_tuples = []
 for problem_id, hparams_list in registry.list_problem_hparams().items():
@@ -40,5 +40,16 @@ def problem_argv(request):
 @pytest.mark.parametrize('problem_argv', problem_hparams_tuples,
                          indirect=['problem_argv'])
 def test_problem(problem_argv):
-  problem = problem_argv.pop('problem')
-  do_run(problem, **problem_argv)
+
+  def wrap(problem, hparam_set, extra_hparams, **kwargs):
+    problem_cls = registry.get_problem(problem)
+    hparams = registry.get_hparam(hparam_set)()
+    hparams.update(extra_hparams)
+
+    cuda = torch.cuda.is_available()
+
+    problem = problem_cls(hparams, argparse.Namespace(**kwargs), None)
+
+    problem.run()
+
+  wrap(**problem_argv)
