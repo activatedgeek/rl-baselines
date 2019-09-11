@@ -15,5 +15,7 @@ from torchrl.utils import get_gym_spaces
 def test_gym_runner(env_id: str):
   runner = GymRunner(env_id)
   agent = GymRandomAgent(*get_gym_spaces(runner.make_env))
-  runner.rollout(agent)
+  trajectory_list = runner.rollout(agent)
   runner.close()
+
+  assert len(trajectory_list) == runner.n_envs

@@ -41,30 +41,3 @@ def init_run_history(observation_space: gym.Space,
       obs_history, action_history, reward_history,
       next_obs_history, done_history
   ]
-
-def append_run_history(history, *transition):
-  """Extend history into numpy arrays.
-
-  This is an extension function for `init_run_history`.
-  Transition is a 5-tuple containing observation,
-  action, reward, next_state and done flag.
-  """
-  obs, action, reward, next_obs, done = transition
-
-  obs = np.expand_dims(obs, axis=0)
-
-  if np.isscalar(action):
-    action = np.array([[action]])
-  elif len(np.shape(action)) < 2:
-    action = np.expand_dims(action, axis=0)
-
-  reward = np.array([[reward]])
-  next_obs = np.expand_dims(next_obs, axis=0)
-  done = np.array([[int(done)]])
-
-  transition = (obs, action, reward, next_obs, done)
-
-  for idx, val in enumerate(transition):
-    history[idx] = np.append(history[idx], val, axis=0)
-
-  return history
