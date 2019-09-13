@@ -1,7 +1,6 @@
 import torch
-
-from .gym_problem import GymProblem
-from ..storage import ReplayBuffer
+from torchrl.problems import GymProblem
+from torchrl.storage import ReplayBuffer
 
 
 class DDPGProblem(GymProblem):

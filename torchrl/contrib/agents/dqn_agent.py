@@ -1,11 +1,11 @@
 from copy import deepcopy
 import torch
 from torch.optim import Adam
+from torchrl.agents import BaseAgent
+from torchrl.policies import epsilon_greedy
+from torchrl.utils import ExpDecaySchedule
 
-from .base_agent import BaseAgent
-from ..policies import epsilon_greedy
 from ..models import QNet
-from ..utils import ExpDecaySchedule
 
 
 class BaseDQNAgent(BaseAgent):

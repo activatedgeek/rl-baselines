@@ -1,6 +1,6 @@
 import torch
-from .gym_problem import GymProblem
-from ..storage import PrioritizedReplayBuffer
+from torchrl.problems import GymProblem
+from torchrl.storage import PrioritizedReplayBuffer
 
 
 class PrioritizedDQNProblem(GymProblem):

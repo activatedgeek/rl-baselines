@@ -2,8 +2,8 @@ import numpy as np
 import torch
 import torch.nn.functional as F
 from torch.optim import Adam
+from torchrl.agents import BaseAgent
 
-from .base_agent import BaseAgent
 from ..models import A2CNet
 
 
