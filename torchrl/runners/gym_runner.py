@@ -101,9 +101,9 @@ class GymRunner(BaseRunner):
           Transition(
             obs=obs,
             action=action,
-            reward=reward,
+            reward=[reward],
             next_obs=next_obs,
-            done=done,
+            done=[done],
           )
         )
 
@@ -118,10 +118,22 @@ class GymRunner(BaseRunner):
     # TODO(sanyam): To do this here or leave upto the consumer?
     trajectory_list = [
       Transition(*[
-          np.array(item) for item in zip(*trajectory)
+        np.array(item, dtype=np.float)
+        for item in zip(*trajectory)
       ])
       for trajectory in trajectory_list
     ]
+
+    # TODO(sanyam): needs to be done for continuous action environments
+    for i, traj in enumerate(trajectory_list):
+      if traj.action.ndim != 2:
+        trajectory_list[i] = Transition(
+          obs=traj.obs,
+          action=np.squeeze(traj.action, axis=-1),
+          reward=traj.reward,
+          next_obs=traj.next_obs,
+          done=traj.done,
+        )
 
     return trajectory_list
 

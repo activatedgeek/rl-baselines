@@ -59,7 +59,7 @@ class BaseDQNAgent(BaseAgent):
     return actions
 
   def compute_q_values(self, obs, action, reward, next_obs, done):
-    current_q_values = self.q_net(obs).gather(1, action)
+    current_q_values = self.q_net(obs).gather(1, action.long())
 
     with torch.no_grad():
       if self.double_dqn:
