@@ -5,7 +5,6 @@ import numpy as np
 from .base_runner import BaseRunner
 from ..agents import BaseAgent
 from ..utils import MultiGymEnvs
-from ..utils.gym_utils import init_run_history
 from ..storage import Transition
 
 
@@ -95,16 +94,11 @@ class GymRunner(BaseRunner):
       step_list = self.envs.step(env_id_list, action_list)
 
       for env_id, obs, action, (next_obs, reward, done, _) in zip(
-                                    env_id_list, obs_list,
-                                    action_list, step_list):
+          env_id_list, obs_list, action_list, step_list):
+
         trajectory_list[env_id].append(
-          Transition(
-            obs=obs,
-            action=action,
-            reward=[reward],
-            next_obs=next_obs,
-            done=[done],
-          )
+            Transition(obs=obs, action=action, reward=[reward],
+                       next_obs=next_obs, done=[done])
         )
 
         self.obs[env_id] = None if done else next_obs
@@ -117,22 +111,22 @@ class GymRunner(BaseRunner):
 
     # TODO(sanyam): To do this here or leave upto the consumer?
     trajectory_list = [
-      Transition(*[
-        np.array(item, dtype=np.float)
-        for item in zip(*trajectory)
-      ])
-      for trajectory in trajectory_list
+        Transition(*[
+            np.array(item, dtype=np.float)
+            for item in zip(*trajectory)
+        ])
+        for trajectory in trajectory_list
     ]
 
     # TODO(sanyam): needs to be done for continuous action environments
     for i, traj in enumerate(trajectory_list):
       if traj.action.ndim != 2:
         trajectory_list[i] = Transition(
-          obs=traj.obs,
-          action=np.squeeze(traj.action, axis=-1),
-          reward=traj.reward,
-          next_obs=traj.next_obs,
-          done=traj.done,
+            obs=traj.obs,
+            action=np.squeeze(traj.action, axis=-1),
+            reward=traj.reward,
+            next_obs=traj.next_obs,
+            done=traj.done,
         )
 
     return trajectory_list

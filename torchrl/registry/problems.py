@@ -307,10 +307,10 @@ class Problem(metaclass=abc.ABCMeta):
 
     for epoch in epoch_iterator:
       self.agent.train(False)
-      trajectory_list = self.runner.rollout(self.agent, steps=params.rollout_steps)
+      traj_list = self.runner.rollout(self.agent, steps=params.rollout_steps)
 
       self.agent.train(True)
-      loss_dict = self.train(trajectory_list)
+      loss_dict = self.train(traj_list)
 
       if epoch % self.args.log_interval == 0:
         for loss_label, loss_value in loss_dict.items():
@@ -319,7 +319,7 @@ class Problem(metaclass=abc.ABCMeta):
 
       log_rollout_steps = 0
 
-      for i, history in enumerate(trajectory_list):
+      for i, history in enumerate(traj_list):
         log_rollout_steps += len(history.reward)
         log_episode_len[i] += len(history.reward)
         log_episode_reward[i] += history.reward.sum()
