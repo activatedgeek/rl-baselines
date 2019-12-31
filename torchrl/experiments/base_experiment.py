@@ -25,10 +25,6 @@ class BaseExperiment(Experiment):
 
     self._cur_frames = 0
 
-  def store(self, transition_list):
-    '''Placeholder method for storage related usage.
-    '''
-
   def build_controller(self) -> Controller:
     return RandomController(self.rollout_env.action_space)
 
@@ -36,6 +32,15 @@ class BaseExperiment(Experiment):
     if self._cur_frames < self.n_rand_frames:
       return RandomController(self.rollout_env.action_space).act(obs)
     return self.controller.act(obs)
+
+  def store(self, transition_list):
+    '''Placeholder method for storage related usage.
+    '''
+
+  def train(self) -> dict:
+    '''Placeholder method for training related usage.
+    '''
+    return {}
 
   def _log_dict(self, tag: str, log_dict: dict):
     for k, v in log_dict.items():
@@ -64,8 +69,8 @@ class BaseExperiment(Experiment):
 
           self.store(self.rollout_env.flush())
 
-          learn_info = self.controller.learn()
-          self._log_dict('learn', learn_info)
+          train_info = self.train()
+          self._log_dict('train', train_info)
 
         if self.rollout_env.is_done:
           self._log_dict('episode', self.rollout_env.info)

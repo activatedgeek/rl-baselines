@@ -52,16 +52,37 @@ class DQNController(Controller):
           np.array(obs)
       ).float().to(self.device).unsqueeze(0)
 
-    actions = self.q_net(obs_tensor)
+      actions = self.q_net(obs_tensor)
+
     actions = actions.argmax(dim=-1, keepdim=True).cpu().numpy()
     actions = epsilon_greedy(self.action_size, actions, self.eps.value)
     return actions.item()
 
-  def learn(self):
-    # TODO(sanyam)
+  def learn(self, obs, action, reward, next_obs, done):
+    self.q_net.train()
+
+    current_q_values = self.q_net(obs).gather(1, action.long())
+
+    with torch.no_grad():
+      if self.double_dqn:
+        _, next_actions = self.q_net(next_obs).max(1, keepdim=True)
+        next_q_values = self.target_q_net(next_obs).gather(1, next_actions)
+      else:
+        next_q_values = self.target_q_net(next_obs)
+        next_q_values = next_q_values.max(1)[0].unsqueeze(1)
+
+      expected_q_values = reward + \
+                          self.gamma * next_q_values * (1.0 - done.float())
+
+    td_error = (expected_q_values - current_q_values)
+    loss = td_error.pow(2).mean()
+
+    self.q_net_optim.zero_grad()
+    loss.backward()
+    self.q_net_optim.step()
 
     self._steps += 1
     if self._steps % self.n_update_interval == 0:
       self.target_q_net.load_state_dict(self.q_net.state_dict())
 
-    return {}
+    return dict(td_loss=loss.detach().cpu())

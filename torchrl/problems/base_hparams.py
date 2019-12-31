@@ -48,14 +48,3 @@ def base_ppo():
   params.max_grad_norm = 1.0
 
   return params
-
-
-def base_dqn():
-  params = base()
-
-  params.double_dqn = False
-  params.eps_max = 1.0
-  params.eps_min = 0.1
-  params.target_update_interval = 2
-
-  return params
