@@ -25,6 +25,10 @@ class BaseExperiment(Experiment):
 
     self._cur_frames = 0
 
+  def store(self, transition_list):
+    '''Placeholder method for storage related usage.
+    '''
+
   def build_controller(self) -> Controller:
     return RandomController(self.rollout_env.action_space)
 
@@ -58,7 +62,7 @@ class BaseExperiment(Experiment):
         if self._cur_frames >= self.n_rand_frames \
           and self._cur_frames % self.n_train_interval == 0:
 
-          self.controller.store(self.rollout_env.flush())
+          self.store(self.rollout_env.flush())
 
           learn_info = self.controller.learn()
           self._log_dict('learn', learn_info)
@@ -66,7 +70,7 @@ class BaseExperiment(Experiment):
         if self.rollout_env.is_done:
           self._log_dict('episode', self.rollout_env.info)
 
-          self.controller.store(self.rollout_env.flush())
+          self.store(self.rollout_env.flush())
 
           self.rollout_env.reset()
 

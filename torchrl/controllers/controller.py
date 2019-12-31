@@ -12,10 +12,6 @@ class Controller(metaclass=abc.ABCMeta):
     '''
     return {}
 
-  def store(self, transition_list):
-    '''Placeholder method to process transitions
-    '''
-
 
 class RandomController(Controller):
   def __init__(self, action_space: gym.Space):

@@ -1,5 +1,6 @@
 from torchrl.experiments import BaseExperiment
 from torchrl.contrib.controllers import DQNController
+from torchrl.utils.storage import TransitionTupleDataset
 
 
 class DQNExperiment(BaseExperiment):
@@ -16,7 +17,12 @@ class DQNExperiment(BaseExperiment):
         n_update_interval=n_update_interval,
     )
 
+    self.buffer = TransitionTupleDataset(size=buffer_size)
+
     super().__init__(**kwargs)
+
+  def store(self, transition_list):
+    self.buffer.extend(transition_list)
 
   def build_controller(self):
     return DQNController(obs_size=self.rollout_env.observation_space.shape[0],
