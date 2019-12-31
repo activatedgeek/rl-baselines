@@ -57,10 +57,5 @@ setup(name='torchrl',
               'sphinxcontrib-programoutput>=0.11',
           ],
           'extra': extra_install_requires,
-      },
-      # entry_points={
-      #     'console_scripts': [
-      #         'torchrl=torchrl.cli.boot:main',
-      #     ]
-      # },
+      }
      )
