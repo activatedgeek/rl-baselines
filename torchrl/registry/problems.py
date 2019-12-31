@@ -7,8 +7,9 @@ from tqdm import tqdm
 import torch
 from torch.utils.tensorboard import SummaryWriter
 
+from kondo.utils import Nop
 from ..agents import BaseAgent
-from ..utils import set_seeds, Nop
+from ..utils import set_seeds
 from ..runners import BaseRunner
 
 

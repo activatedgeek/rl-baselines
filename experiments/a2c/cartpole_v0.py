@@ -1,4 +1,4 @@
-from torchrl import utils
+from torchrl.utils.multi_envs import get_gym_spaces
 from torchrl.problems import base_hparams
 from torchrl.contrib.problems import A2CProblem
 from torchrl.contrib.agents import BaseA2CAgent
@@ -6,7 +6,7 @@ from torchrl.contrib.agents import BaseA2CAgent
 
 class A2CCartpole(A2CProblem):
   def init_agent(self):
-    observation_space, action_space = utils.get_gym_spaces(self.runner.make_env)
+    observation_space, action_space = get_gym_spaces(self.runner.make_env)
 
     agent = BaseA2CAgent(
         observation_space,

@@ -1,4 +1,4 @@
-from torchrl import utils
+from torchrl.utils.multi_envs import get_gym_spaces
 from torchrl.problems import base_hparams
 from torchrl.contrib.problems import DDPGProblem
 from torchrl.contrib.agents import BaseDDPGAgent
@@ -6,7 +6,7 @@ from torchrl.contrib.agents import BaseDDPGAgent
 
 class DDPGPendulum(DDPGProblem):
   def init_agent(self):
-    observation_space, action_space = utils.get_gym_spaces(self.runner.make_env)
+    observation_space, action_space = get_gym_spaces(self.runner.make_env)
 
     agent = BaseDDPGAgent(
         observation_space,

@@ -1,4 +1,4 @@
-from torchrl import utils
+from torchrl.utils.multi_envs import get_gym_spaces
 from torchrl.contrib.problems import PrioritizedDQNProblem
 from torchrl.contrib.agents import BaseDQNAgent
 
@@ -7,7 +7,7 @@ from ..dqn.cartpole_v1 import DQNCartpole
 
 class PERCartpole(PrioritizedDQNProblem):
   def init_agent(self):
-    observation_space, action_space = utils.get_gym_spaces(self.runner.make_env)
+    observation_space, action_space = get_gym_spaces(self.runner.make_env)
 
     agent = BaseDQNAgent(
         observation_space,

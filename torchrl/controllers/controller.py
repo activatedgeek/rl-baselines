@@ -7,6 +7,15 @@ class Controller(metaclass=abc.ABCMeta):
   def act(self, obs):
     raise NotImplementedError
 
+  def learn(self) -> dict:
+    '''Placeholder method for the learning algorithm
+    '''
+    return {}
+
+  def store(self, transition_list):
+    '''Placeholder method to process transitions
+    '''
+
 
 class RandomController(Controller):
   def __init__(self, action_space: gym.Space):

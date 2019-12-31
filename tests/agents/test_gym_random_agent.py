@@ -3,6 +3,7 @@
 import pytest
 import argparse
 from torchrl import utils
+from torchrl.utils.multi_envs import get_gym_spaces
 from torchrl.problems import base_hparams
 from torchrl.problems.gym_problem import GymProblem
 from torchrl.agents.gym_random_agent import GymRandomAgent
@@ -10,7 +11,7 @@ from torchrl.agents.gym_random_agent import GymRandomAgent
 
 class RandomGymProblem(GymProblem):
   def init_agent(self):
-    observation_space, action_space = utils.get_gym_spaces(
+    observation_space, action_space = get_gym_spaces(
         self.runner.make_env)
 
     return GymRandomAgent(observation_space, action_space)

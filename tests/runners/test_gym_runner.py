@@ -2,7 +2,7 @@ import pytest
 
 from torchrl.runners.gym_runner import GymRunner
 from torchrl.agents.gym_random_agent import GymRandomAgent
-from torchrl.utils import get_gym_spaces
+from torchrl.utils.multi_envs import get_gym_spaces
 
 
 @pytest.mark.parametrize('env_id', [
