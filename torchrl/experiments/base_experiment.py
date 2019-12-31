@@ -3,8 +3,8 @@ from tqdm.auto import tqdm
 import torch
 
 
-from ..envs import make_gym_env, TransitionMonitor
-from ..controllers import Controller, RandomController
+from torchrl.envs import make_gym_env, TransitionMonitor
+from torchrl.controllers import Controller, RandomController
 
 
 class BaseExperiment(Experiment):
@@ -22,7 +22,6 @@ class BaseExperiment(Experiment):
     self.rollout_env = TransitionMonitor(make_gym_env(env_id, seed=self.seed))
     self.controller = self.build_controller()
 
-    # Logging
     self._cur_frames = 0
 
   def build_controller(self) -> Controller:
@@ -50,7 +49,7 @@ class BaseExperiment(Experiment):
                 self.logger.add_scalar(f'episode/{k}', v,
                                        global_step=self._cur_frames)
               except AssertionError:
-                ## NOTE: some info may not be scalar and is ignored.
+                # NOTE(sanyam): some info may not be scalar and is ignored.
                 pass
 
           self.rollout_env.reset()

@@ -2,6 +2,14 @@ import gym
 
 
 class TransitionMonitor(gym.Wrapper):
+  '''
+  TransitionMonitor wraps any gym environment and provides
+  standard bookkeeping utilities. All items are kept until
+  the next `reset()` call and can be consumed as necessary.
+   - List of transitions
+   - Episode Return
+   - Episode Length
+  '''
   def __init__(self, env: gym.Env):
     super().__init__(env)
 
@@ -51,3 +59,10 @@ class TransitionMonitor(gym.Wrapper):
     self._obs = next_obs
 
     return next_obs, reward, self._ep_done, self._ep_info
+
+  def flush(self) -> list:
+    '''Empty transition buffer on demand.
+    '''
+    transitions = self.transitions
+    self._ep_trans = []
+    return transitions
