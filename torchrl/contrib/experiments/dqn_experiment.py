@@ -28,8 +28,8 @@ class DQNExperiment(BaseExperiment):
     self.buffer.extend(transition_list)
 
   def build_controller(self):
-    return DQNController(obs_size=self.rollout_env.observation_space.shape[0],
-                         action_size=self.rollout_env.action_space.n,
+    return DQNController(self.rollout_env.observation_space.shape[0],
+                         self.rollout_env.action_space.n,
                          **self._controller_args,
                          device=self.device)
 

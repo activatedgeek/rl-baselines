@@ -2,7 +2,6 @@
 
 import pytest
 import argparse
-from torchrl import utils
 from torchrl.utils.multi_envs import get_gym_spaces
 from torchrl.problems import base_hparams
 from torchrl.problems.gym_problem import GymProblem

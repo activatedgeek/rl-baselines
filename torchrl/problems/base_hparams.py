@@ -28,17 +28,6 @@ def base_pg():
   return params
 
 
-def base_ddpg():
-  params = base_pg()
-
-  params.tau = 1e-2
-  params.ou_mu = 0.0
-  params.ou_theta = 0.15
-  params.ou_sigma = 0.2
-
-  return params
-
-
 def base_ppo():
   params = base_pg()
 
