@@ -4,6 +4,18 @@ from typing import List
 from collections import namedtuple
 
 
+def truncated_cat(a, b, maxsize=-1):
+  # NOTE(sanyam): this may overflow a little over size
+  # but keeps logic simple.
+  res = torch.cat([a, b], dim=0)
+
+  diff = res.size(0) - maxsize
+  if maxsize > 0 and diff > 0:
+    res = res[diff:]
+
+  return res
+
+
 class TensorTupleDataset(Dataset):
   '''Store vectorized tuples of tensors
   '''
@@ -22,13 +34,7 @@ class TensorTupleDataset(Dataset):
       if self._raw_x[i] is None:
         self._raw_x[i] = torch.zeros(0, *new_x.shape[1:])
 
-      # NOTE(sanyam): this may overflow a little over size
-      # but keeps logic simple.
-      self._raw_x[i] = torch.cat([self._raw_x[i], new_x], dim=0)
-
-      diff = self._raw_x[i].size(0) - self.size
-      if self.size > 0 and diff > 0:
-        self._raw_x[i] = self._raw_x[i][diff:]
+      self._raw_x[i] = truncated_cat(self._raw_x[i], new_x, maxsize=self.size)
 
   def __len__(self) -> int:
     if self._raw_x is None:

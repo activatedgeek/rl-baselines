@@ -6,9 +6,9 @@ from torchrl.utils.storage import TransitionTupleDataset
 
 
 class DQNExperiment(BaseExperiment):
-  def __init__(self, double_dqn=False, gamma=.99, batch_size=32,
-               lr=1e-3, buffer_size=1000, eps_max=1.0, eps_min=1e-2,
-               n_eps_anneal=100, n_update_interval=10, **kwargs):
+  def __init__(self, double_dqn=False, prioritized=False, gamma=.99, 
+               batch_size=32, lr=1e-3, buffer_size=1000, eps_max=1.0,
+               eps_min=1e-2, n_eps_anneal=100, n_update_interval=10, **kwargs):
     self._controller_args = dict(
         double_dqn=double_dqn,
         gamma=gamma,
@@ -79,5 +79,33 @@ class DQNExperiment(BaseExperiment):
                 n_eps_anneal=500,
             ),
             exhaustive=True
-        )
+        ),
+        Spec(
+            group='per',
+            params=dict(
+                env_id=['CartPole-v0'],
+                gamma=.99,
+                n_train_interval=1,
+                n_frames=20000,
+                batch_size=32,
+                buffer_size=1000,
+                double_dqn=False,
+                prioritized=True,
+                eps_max=1.0,
+                eps_min=1e-2,
+                n_update_interval=10,
+                lr=1e-3,
+                n_eps_anneal=500,
+            ),
+            exhaustive=True
+        ),
     ]
+
+
+if __name__ == "__main__":
+  from kondo import HParams
+
+  g = 'dqn'
+  _, trial = next(HParams(DQNExperiment).trials(groups=[g]))
+  trial['log_dir'] = f'log/{g}'
+  DQNExperiment(**trial).run()
