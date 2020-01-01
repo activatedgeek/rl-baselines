@@ -37,8 +37,6 @@ setup(name='torchrl',
           'Topic :: Scientific/Engineering :: Artificial Intelligence',
       ],
       packages=find_packages(exclude=[
-          'tests',
-          'tests.*',
           'experiments',
           'experiments.*'
       ]),
