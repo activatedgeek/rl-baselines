@@ -21,7 +21,7 @@ jobs:
         - pip install .[test]
       script:
         - pytest
-        - pylint setup.py torchrl experiments
+        - pylint setup.py torchrl examples
 
     - stage: deploy
       before_script:

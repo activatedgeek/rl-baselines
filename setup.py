@@ -37,8 +37,8 @@ setup(name='torchrl',
           'Topic :: Scientific/Engineering :: Artificial Intelligence',
       ],
       packages=find_packages(exclude=[
-          'experiments',
-          'experiments.*'
+          'examples',
+          'examples.*'
       ]),
       python_requires='>=3.6',
       install_requires=install_requires,

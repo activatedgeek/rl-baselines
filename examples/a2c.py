@@ -16,7 +16,7 @@ class A2CExperiment(BaseExperiment):
         beta=beta
     )
 
-    kwargs['n_train_interval'] = kwargs['n_envs'] * rollout_steps
+    kwargs['n_train_interval'] = kwargs.get('n_envs', 1) * rollout_steps
 
     super().__init__(**kwargs)
 
@@ -71,14 +71,3 @@ class A2CExperiment(BaseExperiment):
             )
         )
     ]
-
-
-if __name__ == "__main__":
-  from kondo import HParams
-
-  hp = HParams(A2CExperiment)
-  _, trial = next(hp.trials(groups=['a2c']))
-
-  trial['log_dir'] = 'log/a2c'
-
-  A2CExperiment(**trial).run()

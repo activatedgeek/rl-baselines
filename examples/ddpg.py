@@ -64,14 +64,3 @@ class DDPGExperiment(BaseExperiment):
             exhaustive=True
         )
     ]
-
-
-if __name__ == "__main__":
-  from kondo import HParams
-
-  hp = HParams(DDPGExperiment)
-  _, trial = next(hp.trials(groups=['ddpg']))
-
-  trial['log_dir'] = 'log/ddpg'
-
-  DDPGExperiment(**trial).run()

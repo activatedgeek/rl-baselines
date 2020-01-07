@@ -102,14 +102,3 @@ class DQNExperiment(BaseExperiment):
             exhaustive=True
         ),
     ]
-
-
-if __name__ == "__main__":
-  from kondo import HParams
-
-  hp = HParams(DQNExperiment)
-  _, trial = next(hp.trials(groups=['ddqn']))
-
-  trial['log_dir'] = 'log/ddqn'
-
-  DQNExperiment(**trial).run()

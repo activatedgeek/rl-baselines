@@ -21,7 +21,7 @@ class PPOExperiment(BaseExperiment):
         max_grad_norm=max_grad_norm
     )
 
-    kwargs['n_train_interval'] = kwargs['n_envs'] * rollout_steps
+    kwargs['n_train_interval'] = kwargs.get('n_envs', 1) * rollout_steps
 
     super().__init__(**kwargs)
 
@@ -96,14 +96,3 @@ class PPOExperiment(BaseExperiment):
             )
         )
     ]
-
-
-if __name__ == "__main__":
-  from kondo import HParams
-
-  hp = HParams(PPOExperiment)
-  _, trial = next(hp.trials(groups=['ppo']))
-
-  trial['log_dir'] = 'log/ppo'
-
-  PPOExperiment(**trial).run()
