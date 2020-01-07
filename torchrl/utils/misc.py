@@ -1,7 +1,4 @@
-import os
-import sys
 import re
-import importlib
 import torch
 import numpy as np
 import random
@@ -15,14 +12,6 @@ all_cap_re = re.compile('([a-z])([A-Z])')
 def to_camel_case(name: str):
   cap_sub = first_cap_re.sub(r'\1_\2', name)
   return all_cap_re.sub(r'\1_\2', cap_sub).lower()
-
-
-def import_usr_dir(usr_dir):
-  dir_path = os.path.abspath(os.path.expanduser(usr_dir).rstrip("/"))
-  containing_dir, module_name = os.path.split(dir_path)
-  sys.path.insert(0, containing_dir)
-  importlib.import_module(module_name)
-  sys.path.pop(0)
 
 
 def set_seeds(seed):

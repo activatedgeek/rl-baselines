@@ -1,2 +1,2 @@
-from .misc import set_seeds, minibatch_generator, import_usr_dir
+from .misc import set_seeds, minibatch_generator
 from .schedule import LinearSchedule, ExpDecaySchedule

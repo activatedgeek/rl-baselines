@@ -1,13 +1,4 @@
-import os
-import sys
-from torchrl.utils.misc import import_usr_dir, to_camel_case
-
-
-def test_import_usr_dir():
-  usr_dir = os.path.dirname(__file__)
-  import_usr_dir(usr_dir)
-
-  assert os.path.dirname(usr_dir) not in sys.path
+from torchrl.utils.misc import to_camel_case
 
 
 def test_camel_case():

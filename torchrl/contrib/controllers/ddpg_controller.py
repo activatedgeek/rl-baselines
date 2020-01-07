@@ -96,7 +96,7 @@ class DDPGController(Controller):
     if self.noise.step % self.n_reset_interval == 0:
       self.noise.reset()
 
-    return [a for a in action]
+    return action
 
   def learn(self, obs, action, reward, next_obs, done):
     self.actor.train()
