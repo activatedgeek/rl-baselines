@@ -26,10 +26,10 @@ class DDPGExperiment(BaseExperiment):
     self.buffer.extend(transition_list)
 
   def build_controller(self):
-    return DDPGController(self.rollout_env.observation_space.shape[0],
-                          self.rollout_env.action_space.shape[0],
-                          self.rollout_env.action_space.low,
-                          self.rollout_env.action_space.high,
+    return DDPGController(self.envs.observation_space.shape[0],
+                          self.envs.action_space.shape[0],
+                          self.envs.action_space.low,
+                          self.envs.action_space.high,
                           **self._controller_args,
                           device=self.device)
 
@@ -64,3 +64,14 @@ class DDPGExperiment(BaseExperiment):
             exhaustive=True
         )
     ]
+
+
+if __name__ == "__main__":
+  from kondo import HParams
+
+  hp = HParams(DDPGExperiment)
+  _, trial = next(hp.trials(groups=['ddpg']))
+
+  trial['log_dir'] = 'log/ddpg'
+
+  DDPGExperiment(**trial).run()
