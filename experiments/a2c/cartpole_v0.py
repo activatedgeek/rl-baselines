@@ -1,7 +1,7 @@
 import abc
 import torch
 import numpy as np
-from torchrl.utils.multi_envs import get_gym_spaces
+from torchrl.envs import get_gym_spaces
 from torchrl.problems import base_hparams
 from torchrl.contrib.models import A2CNet
 from torchrl.problems import GymProblem

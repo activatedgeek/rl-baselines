@@ -3,7 +3,7 @@ import gym
 import numpy as np
 
 from .base_runner import BaseRunner
-from ..utils import MultiGymEnvs
+from torchrl.envs import ParallelEnvs as MultiGymEnvs
 from torchrl.utils.storage import Transition
 
 
