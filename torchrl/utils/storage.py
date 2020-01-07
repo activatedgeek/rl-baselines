@@ -44,6 +44,9 @@ class TensorTupleDataset(Dataset):
   def __getitem__(self, index) -> List[torch.Tensor]:
     return [x[index] for x in self._raw_x]
 
+  def truncate(self):
+    self._raw_x = None
+
 
 Transition = namedtuple('Transition', [
     'obs',
